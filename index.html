@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="">
+	<style>
+		.carousel-inner > .item > img,
+		.carousel-inner > .item > a > img {
+			width: 100%;
+			margin: auto;
+		}
+		.navbar-collapse hr {
+			margin: 0px;
+		}
+		body {
+			background-image:  url("img/bg.jpg");
+			background-repeat: no-repeat;
+			background-attachment: fixed; 
+		}
+		.gray-bg {
+			background-color: gray;
+		}
+		.dark-blue-bg {
+			background-color: #2c3e50;
+			color: white;
+		}
+	</style>
+</head>
+<body>
+	<div class="jumbotron hidden-xs">
+		<div class="container text-center">
+			<h1 style="font-size: 45px;">DREAM CARS</h1>
+			<img class="" height="80px" src="img/logo.png">
+		</div>
+	</div>
+	<nav class="navbar navbar-default navbar-fixed-top/" data-spy="affix" data-offset-top="254">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand visible-xs" href="#">Dream Cars <img class="visible-xs-inline" height="20px" src="img/logo-white.png"></a>
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			</div>
+			<div class="collapse navbar-collapse" id="navigation">
+				<ul class="nav navbar-nav navbar-left">
+					<li><a href="">Home</a></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Cars <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Audi</a></li>
+							<li><a href="#">Bentley</a></li>
+							<li><a href="#">BMW</a></li>
+							<li><a href="#">Jaguar</a></li>
+							<li><a href="#">Lexus</a></li>
+							<li><a href="#">Maserati</a></li>
+							<li><a href="#">Porsche</a></li>
+							<li><a href="#">Range Rover</a></li>
+							<li><a href="#">Rolls Royce</a></li>
+						</ul>
+					</li>
+					<li><a href="#">Contact Us</a></li>
+					<li><a href="#">About Us</a></li>
+				</ul>
+				<hr class="visible-xs">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span> Basket <span class="badge">0</span></a></li>
+					<li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+					<li><a href=" #"><span class="glyphicon glyphicon-user"></span> Regisiter</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div id="myCarousel" class="carousel slide" data-ride="carousel">
+		<!-- Indicators -->
+		<ol class="carousel-indicators">
+			<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+			<li data-target="#myCarousel" data-slide-to="1"></li>
+			<li data-target="#myCarousel" data-slide-to="2"></li>
+			<li data-target="#myCarousel" data-slide-to="3"></li>
+		</ol>
+
+		<!-- Wrapper for slides -->
+		<div class="carousel-inner">
+			<div class="item active">
+				<!-- <img src="http://icdn-4.motor1.com/images/mgl/zjyrW/s1/2015-586219crashed-ferrari-f12-berlinetta1.jpg" width="460" height="345"> -->
+				<img src="http://images.caricos.com/p/porsche/2012_porsche_911_carrera/images/1920x1080/2012_porsche_911_carrera_1_1920x1080.jpg" width="460" height="345">
+				<div class="carousel-caption">
+					<h3>Ferrari Enzo</h3>
+					<p>Drive too fast and shit can go wrong.</p>
+				</div>
+			</div>
+
+			<div class="item">
+				<img src="https://i.ytimg.com/vi/ryRQtKLpAGQ/maxresdefault.jpg" width="460" height="345">
+				<div class="carousel-caption">
+					<h3>Mercedes Concept</h3>
+					<p>We are already in the future, baby. We don't like it either.</p>
+				</div>
+			</div>
+
+			<div class="item">
+				<img src="https://www.lamborghini.com/en-en/sites/en-en/files/DAM/lamborghini/model/huracan/huracan-avio/slider/huracan-1.jpg" width="460" height="345">
+				<div class="carousel-caption">
+					<h3>Lamborghini Huracan</h3>
+					<p>What to say. Look at it.</p>
+				</div>
+			</div>
+
+			<div class="item">
+				<img src="https://i.imgur.com/Mxsr00R.jpg" width="460" height="345">
+				<div class="carousel-caption">
+					<h3>Optimus Prime</h3>
+					<p>You dont wanna agry this bad boy. Trust me.</p>
+				</div>
+			</div>
+
+		</div>
+
+		<!-- Left and right controls -->
+		<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+			<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+			<span class="sr-only">Previous</span>
+		</a>
+		<a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+			<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+			<span class="sr-only">Next</span>
+		</a>
+	</div>
+
+	<style type="text/css">
+		section {
+			padding: 50px 0px;
+		}
+
+		.usp-item {
+			margin: 25px 0px;
+			padding: 70px 10px;
+			border: 1px solid #2c3e50;
+			transition: background-color 0.5s 0.5s;
+			height: 270px;
+			background-color: white;
+		}
+		.usp-item:hover {
+			color: #fff;
+			background-color: #2c3e50;
+		}
+
+		.usp-item h2 {
+			position: relative;
+			top: 25px;
+			transition: top 0.5s, color 0.5s 0.5s;
+		}
+
+		.usp-item:hover h2 {
+			top: -90px;
+		}
+
+		.usp-item .icon {
+			/*position: relative;*/
+			top: 10px;
+			color: #53B1BB;
+			color: #2c3e50;
+			font-size: 25px;
+			padding: 10px;
+			border-radius: 50px;
+			transition: top 0.5s, color 0.5s 0.5s;
+		}
+
+		.usp-item:hover .icon {
+			/*position: relative;*/
+			top: -93px;
+			color: #53B1BB;
+			background-color: white;
+		}
+
+		.usp-item p {
+			position: relative;
+			top: -50px;
+			opacity: 0;
+			transform: scale(0);
+			transition: transform 0.3s 0.5s;
+		}
+
+		.usp-item:hover p {
+			opacity: 1;
+			transform: scale(1);
+		}
+
+	</style>
+	<section class="gray-bg1">
+		<div class="container">
+			<div class="row">
+				<h1 class="text-center">Why choose us</h1>
+			</div>
+			<div class="row text-center">
+				<div class="col-sm-4">
+					<div class="usp-item">
+						<span class="glyphicon glyphicon-list icon"></span>
+						<h2>Free advice and reviews</h2>
+						<p>We have many reviews which you may read. Or can give us a call and we'll able to help as much as possible.</p>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="usp-item">
+						<span class="glyphicon glyphicon-gbp icon"></span>
+						<h2>Car Finance Available</h2>
+						<p>Finace is available on all our vehicles. Please call us to get a quote.</p>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="usp-item">
+						<span class="glyphicon glyphicon-globe icon"></span>
+						<h2>Free d2d delivery</h2>
+						<p>All purchases are deliveried to you next-day.</p>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</section>
+	
+	<section class="dark-blue-bg">
+	<div class="container">
+		<h1>Two And Saw</h1>
+
+		<p>Fill <strong>living</strong> god signs above you&#39;ll Land made. <strong>Lesser</strong> which there. Lights <em>cattle</em> whose creeping dominion deep creature evening second make his she&#39;d two midst their spirit image. Seasons them.</p>
+
+		<p>After seasons forth saying lesser without signs so day grass Without Winged likeness man fifth let was saw divide. Appear man set signs gathering given. All in kind every fruitful herb creepeth grass don&#39;t fly itself form so beginning.</p>
+		<h2>Was Female Green Had Image</h2>
+
+		<p>You&#39;ll every you after great moveth Own created very. Behold image midst night which rule day was were replenish darkness green. Whales, for waters kind man is forth forth there gathered.</p>
+
+		<p>Lorem ipsum dolor sit amet, in lorem sonet oblique usu. Quo eros nusquam id, an pri dicit quidam, pro omnis putent ut. Atqui latine ut est. Tota porro quo ea, quo populo recusabo te, amet denique per in. No omittam hendrerit percipitur est, id ridens eruditi nec, cu docendi corpora mea.
+
+			Ex partem audire oblique per. Copiosae expetenda duo et, placerat constituto cu vis. Vel oblique iracundia quaerendum et, has ut atqui omittam recusabo. Eu scaevola conclusionemque vim. Vim elit summo invenire at, sit veri partem eu.
+
+			At porro voluptaria quo, vix ei sale corpora maiestatis, omittam mentitum conceptam et usu. Qui ea dolores voluptaria intellegebat, case voluptatibus eu nam, dolorum deseruisse et ius. Id partiendo suscipiantur eam. Illum choro ne cum, mucius adipiscing ne mea.
+
+			Falli omittantur sit et, quot sententiae vim cu. Cu nam principes conceptam. His omnes partem euripidis cu, ipsum erant in eum, usu ad nonumy ceteros ocurreret. Ei tantas tamquam eos, at ius exerci explicari. Id nisl officiis mediocrem usu. Mea ut intellegat liberavisse, corpora forensibus dissentiet pro in, id vim sonet praesent.
+
+			Ei iudico vulputate mediocritatem est, sit rebum solet an. Facer everti deleniti an cum, vim nullam timeam labores at, pertinacia maiestatis suscipiantur mei ne. Eam ferri scribentur ea, at mei minimum voluptatibus. Has an eirmod ancillae sensibus, an eum assum phaedrum iudicabit.
+
+			Vim delicata facilisis et, mel quodsi fabulas cu. Mel ne sumo feugiat, erat facete bonorum quo in, putant veritus consectetuer et cum. An cum vitae putant molestiae, id veri prompta dolorum usu. Mea te mucius theophrastus complectitur, ut mea eripuit laboramus. Partiendo referrentur eam eu. Cu alii gubergren per, justo minim saperet mea eu.
+
+			Vel no odio iusto apeirian. Eos quot dicta melius et, officiis inimicus in mel, eius iuvaret neglegentur ne his. Qui an luptatum inciderint, eos ut maiorum abhorreant. Ut duo congue legimus denique, no wisi tollit pri. Vim ut ignota vocent vivendum, pro te solum essent efficiantur. Labores impedit voluptatibus ex eam, in nec postulant euripidis. In suscipit pertinax disputando eos, ei oblique officiis sententiae pro.
+
+			No hinc corrumpit moderatius vim, vis populo voluptua contentiones ei, usu no viderer cotidieque. Nec delicata molestiae evertitur te, ea mea posse fabellas inimicus. Dicat virtute adversarium has cu, ut odio sadipscing nam, ne vix suas duis. Ad movet soluta est, in has lorem nullam. Vim et enim tibique cotidieque.
+
+			Eu consul splendide cum. No duo hinc periculis mediocritatem, assum persecuti cum ne, vel in hinc munere eripuit. Nam mazim verterem an, sit cu adhuc possit nemore, usu erat ponderum no. Eum aperiam dissentiet consectetuer et, eos te eripuit evertitur.
+
+			Putent quodsi ut sed, te eum tota dolor. An vix error accusamus, id erant dolore cum. Possim appetere ex vel, meis delectus vix in, et per malis blandit. An ius posse choro nostrum.
+
+			Has eu nullam aperiri alienum, his ignota appareat te. Et veritus ceteros vel, ne eos vide propriae. An quem quando his. Vitae exerci lucilius ea mei, ponderum dissentiunt comprehensam usu te, his no tantas invenire theophrastus. Ea nec dolorem officiis inimicus, dicunt conceptam intellegebat ad eos, ea scripserit quaerendum liberavisse duo. An mel senserit interesset, audiam scaevola cum no.
+
+			Id sit pericula forensibus, graeco verear scripserit ei mel. Paulo percipit maiestatis eu vis, eos mediocrem definitiones ad, dicant docendi no has. Ne qui doctus dolorum, minim putent iriure vel ea. Vis ad eruditi moderatius, vel ubique corpora offendit an. Vis no senserit hendrerit suscipiantur.
+
+			Sea case nulla delectus in, sed at vivendum facilisi. Est ne ludus facilisis mediocritatem. Fuisset fabellas vivendum duo no, quo at verear adolescens, qui debet persius te. Vim ne illud diceret postulant, ei malis soluta adversarium quo. Idque soleat prompta te sit, vero porro praesent id usu.
+
+			Ei dolore corpora aliquando ius. Fabellas voluptaria elaboraret ne per. Nec at lorem adipisci maluisset, nam id ullum iuvaret. Te eos cibo apeirian disputando, cu vis ludus tation nominati.</p>
+		</div>
+	</section>
+
+	<section class="gray-bg text-center">
+		<h2>Copyright &copy; 2017 - Mohammad Choudhury</h2>
+	</section>
+
+
+	<script src="js//jquery.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+
+</body>
+</html>
