@@ -10,6 +10,7 @@
 </head>
 <body>
 	<?php include 'header.php'; ?>
+	
 	<div id="banner">
 		<div class="container-fluid">
 			<div class="row">
@@ -22,7 +23,6 @@
 						</li>
 						<li>Page Title</li>
 					</ul>
-
 				</div>
 			</div>
 		</div>
