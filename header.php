@@ -36,7 +36,7 @@
 			</ul>
 			<hr class="visible-xs">
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span> Basket <span class="badge">0</span></a></li>
+				<li><a href="basket.php"><span class="glyphicon glyphicon-shopping-cart"></span> Basket <span class="badge">0</span></a></li>
 				<li><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
 				<li><a href=" #"><span class="glyphicon glyphicon-user"></span> Regisiter</a></li>
 			</ul>
