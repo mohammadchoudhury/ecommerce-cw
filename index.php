@@ -100,7 +100,7 @@
 		</div>
 	</section>
 
-	<section class="dark-blue-bg">
+	<section class="blue-bg">
 		<div class="container">
 			<h1>Some filler text</h1>
 			<h2>Lorem Ipsum</h2>

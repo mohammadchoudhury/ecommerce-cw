@@ -12,12 +12,15 @@
 	<?php include 'header.php'; ?>
 	<style type="text/css">
 		#heading-breadcrumbs {
-			padding:30px 0;
+			padding:30px;
+		    background: url('img/carousel/Bugatti-Veyron.jpg') no-repeat;
+		    background-position: center;
+		    background-size: cover;
 		}
 
 		#heading-breadcrumbs h1 {
 			margin: 0px;
-			color:#333;
+			color:white;
 			text-transform:uppercase;
 			font-size:30px;
 			font-weight:700;
@@ -44,9 +47,19 @@
 		    text-transform: uppercase;
 		    letter-spacing: 3px;
 		}
+
+		.breadcrumb li {
+			color: white;
+			font-weight: 900;
+		}
+
+		.breadcrumb > li + li::before {
+			content: "> ";
+			color: white;
+		}
 	</style>
 	<div id="heading-breadcrumbs">
-		<div class="container">
+		<div class="container-fluid">
 			<div class="row">
 				<div class="col-md-7">
 					<h1>Page Title</h1>
@@ -63,9 +76,7 @@
 		</div>
 	</div>
 
-
-
-	<section class="dark-blue-bg text-center">
+	<section class="gray-bg text-center">
 		<div class="container">
 			<div class="row">
 				<h1>Basic Page Template</h1>
