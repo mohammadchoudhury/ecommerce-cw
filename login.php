@@ -67,7 +67,7 @@
 						<p class="lead">Already our customer?</p>
 						<hr style="border-color: #2c3e50;">
 						<div class="well">
-							<form action="customer-orders.html" method="post">
+							<form action="login.php" method="post">
 								<div class="form-group">
 									<div class="input-group">
 									  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
@@ -92,7 +92,7 @@
 						<h2 class="text-uppercase">Login</h2>
 						<p class="lead">Already our customer?</p>
 						<hr style="border-color: #2c3e50;">
-						<form action="customer-orders.html" method="post">
+						<form action="login.php" method="post">
 							<div class="form-group">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
@@ -154,7 +154,7 @@
 						<p class="lead">Already our customer?</p>
 						<hr style="border-color: #2c3e50;">
 						<div class="well">
-							<form action="customer-orders.html" method="post">
+							<form action="login.php" method="post">
 								<div class="form-group">
 									<div class="input-group">
 									  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
@@ -179,7 +179,7 @@
 						<h2 class="text-uppercase">Login</h2>
 						<p class="lead">Already our customer?</p>
 						<hr style="border-color: #2c3e50;">
-						<form action="customer-orders.html" method="post">
+						<form action="login.php" method="post">
 							<div class="form-group">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
@@ -247,7 +247,7 @@
 						<p class="lead">Already our customer?</p>
 						<hr style="border-color: #2c3e50;">
 						<div class="well white-bg">
-							<form action="customer-orders.html" method="post">
+							<form action="login.php" method="post">
 								<div class="form-group">
 									<div class="input-group">
 									  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
@@ -272,7 +272,7 @@
 						<h2 class="text-uppercase">Login</h2>
 						<p class="lead">Already our customer?</p>
 						<hr style="border-color: #2c3e50;">
-						<form action="customer-orders.html" method="post">
+						<form action="login.php" method="post">
 							<div class="form-group">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
