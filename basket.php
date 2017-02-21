@@ -28,11 +28,120 @@
 		</div>
 	</div>
 
-	<section class="gray-bg text-center">
+	<section class="gray-bg">
 		<div class="container">
 			<div class="row">
-				<h1>Basic Page Template</h1>
-				<p>Cool story bro!</p>
+				<div class="col-md-9" id="basket">
+					<form method="post" action="">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+							<h4 class="text-uppercase">You currently have 3 item(s) in your basket.</h4>
+							</div>
+							<div class="panel-body">
+								<div class="table-responsive">
+									<table class="table">
+										<thead>
+											<tr>
+												<th colspan="2">Product</th>
+												<th>Quantity</th>
+												<th>Unit price</th>
+												<th>Discount</th>
+												<th colspan="2">Total</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td><a href="#"><img src="http://www.freeiconspng.com/uploads/car-icon-27.png" height="25px"></a></td>
+												<td><a href="#">BMW 3 Series M Sport</a></td>
+												<td><input value="2" class="form-control" type="number"></td>
+												<td>&pound;10,000.00</td>
+												<td>&pound;0.00</td>
+												<td>&pound;20,000.00</td>
+												<td><a href="#"><i class="glyphicon glyphicon-trash"></i></a>
+												</td>
+											</tr>
+											<tr>
+												<td><a href="#"><img src="http://www.freeiconspng.com/uploads/car-icon-27.png" height="25px"></a></td>
+												<td><a href="#">BMW 3 Series M Sport</a></td>
+												<td><input value="1" class="form-control" type="number"></td>
+												<td>&pound;15,000.00</td>
+												<td>&pound;0.00</td>
+												<td>&pound;15,000.00</td>
+												<td><a href="#"><i class="glyphicon glyphicon-trash"></i></a>
+												</td>
+											</tr>
+										</tbody>
+										<tfoot>
+											<tr>
+												<th colspan="5">Total</th>
+												<th colspan="2">&pound;35,000.00</th>
+											</tr>
+										</tfoot>
+									</table>
+								</div>
+							</div>
+							<div class="panel-footer clearfix">
+								<div class="pull-left">
+									<a href="#" class="btn btn-danger"><i class="glyphicon glyphicon-arrow-left"></i> Continue shopping</a>
+								</div>
+								<div class="pull-right">
+									<button class="btn btn-success">Update cart <i class="glyphicon glyphicon-refresh"></i></button>
+									<button type="submit" class="btn btn-primary">Proceed to checkout <i class="glyphicon glyphicon-arrow-right"></i>
+									</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="col-md-3">
+					<div class="panel-group">
+						<div class="panel panel-default" id="order-summary">
+							<div class="panel-heading">
+								<h3 class="text-uppercase">Order summary</h3>
+							</div>
+							<div class="panel-body">
+								<div class="table-responsive">
+									<table class="table">
+										<tbody>
+											<tr>
+												<td>Order subtotal</td>
+												<th>&pound;35,000.00</th>
+											</tr>
+											<tr>
+												<td>Shipping and handling</td>
+												<th>&pound;0.00</th>
+											</tr>
+											<tr>
+												<td>Tax</td>
+												<th>&pound;7,000.00</th>
+											</tr>
+											<tr class="total">
+												<td>Total</td>
+												<th>&pound;42,000.00</th>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="text-uppercase">Coupon code</h4>
+							</div>
+							<div class="panel-body">
+								<p class="text-muted">If you have a coupon code, please enter it in the box below.</p>
+								<form lpformnum="1">
+									<div class="input-group">
+										<input class="form-control" type="text">
+										<span class="input-group-btn">
+											<button class="btn btn-warning" type="button"><i class="glyphicon glyphicon-gift"></i></button>
+										</span>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</section>
