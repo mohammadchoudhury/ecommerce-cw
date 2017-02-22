@@ -97,7 +97,7 @@
 
 #banner .container-fluid {
 	padding: 30px 45px;
-	background: rgba(0, 0, 0, 0.5);
+	background: rgba(0, 0, 0, 0.35);
 }
 
 #banner h1 {
@@ -197,4 +197,28 @@ section {
  .usp-item:hover p {
  	opacity: 1;
  	transform: scale(1);
+ }
+
+ /*----- BASKET/ORDER SUMMARY -----*/
+ #basket input[type=number] {
+ 	width: 60px;
+ }
+
+ #basket img {
+ 	height: 50px;
+ }
+
+ #order-summary h3 {
+ 	margin-top: 10px;
+ }
+
+ #basket .table,
+ #order-summary .table {
+ 	margin-bottom: 0px;
+ }
+ 
+ #basket .table td,
+ #order-summary .table td,
+ #order-summary .table th {
+ 	vertical-align: middle;
  }

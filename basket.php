@@ -34,52 +34,50 @@
 				<div class="col-md-9" id="basket">
 					<form method="post" action="">
 						<div class="panel panel-default">
-							<div class="panel-heading">
-							<h4 class="text-uppercase">You currently have 3 item(s) in your basket.</h4>
-							</div>
-							<div class="panel-body">
+							<div class="panel-heading"><h4 class="text-uppercase">You currently have 3 item(s) in your basket.</h4></div>
+							<!-- <div class="panel-body"> -->
 								<div class="table-responsive">
-									<table class="table">
+									<table class="table table-bordered table-striped">
 										<thead>
 											<tr>
 												<th colspan="2">Product</th>
 												<th>Quantity</th>
 												<th>Unit price</th>
 												<th>Discount</th>
-												<th colspan="2">Total</th>
+												<th colspan="4">Total</th>
 											</tr>
 										</thead>
 										<tbody>
 											<tr>
-												<td><a href="#"><img src="http://www.freeiconspng.com/uploads/car-icon-27.png" height="25px"></a></td>
+												<td class="text-center"><a href="#"><img class="img-thumbnail" src="http://www.freeiconspng.com/uploads/car-icon-27.png"></a></td>
 												<td><a href="#">BMW 3 Series M Sport</a></td>
-												<td><input value="2" class="form-control" type="number"></td>
+												<td><input class="form-control" type="number" min="1" max="9" maxlength="1" value="2"></td>
 												<td>&pound;10,000.00</td>
 												<td>&pound;0.00</td>
 												<td>&pound;20,000.00</td>
-												<td><a href="#"><i class="glyphicon glyphicon-trash"></i></a>
+												<td class="text-center"><a href="#"><i class="glyphicon glyphicon-trash"></i></a>
 												</td>
 											</tr>
 											<tr>
-												<td><a href="#"><img src="http://www.freeiconspng.com/uploads/car-icon-27.png" height="25px"></a></td>
+												<td class="text-center"><a href="#"><img class="img-thumbnail" src="http://www.freeiconspng.com/uploads/car-icon-27.png"></a></td>
 												<td><a href="#">BMW 3 Series M Sport</a></td>
-												<td><input value="1" class="form-control" type="number"></td>
+												<td><input class="form-control" type="number" min="1" max="9" maxlength="1" value="1"></td>
 												<td>&pound;15,000.00</td>
 												<td>&pound;0.00</td>
 												<td>&pound;15,000.00</td>
-												<td><a href="#"><i class="glyphicon glyphicon-trash"></i></a>
+												<td class="text-center"><a href="#"><i class="glyphicon glyphicon-trash"></i></a>
 												</td>
 											</tr>
 										</tbody>
 										<tfoot>
 											<tr>
-												<th colspan="5">Total</th>
+												<th class="text-right" colspan="5">Subtotal</th>
 												<th colspan="2">&pound;35,000.00</th>
 											</tr>
 										</tfoot>
 									</table>
 								</div>
-							</div>
+							<!-- </div> -->
 							<div class="panel-footer clearfix">
 								<div class="pull-left">
 									<a href="#" class="btn btn-danger"><i class="glyphicon glyphicon-arrow-left"></i> Continue shopping</a>
@@ -99,12 +97,12 @@
 							<div class="panel-heading">
 								<h3 class="text-uppercase">Order summary</h3>
 							</div>
-							<div class="panel-body">
+							<!-- <div class="panel-body"> -->
 								<div class="table-responsive">
-									<table class="table">
+									<table class="table table-bordered table-striped">
 										<tbody>
 											<tr>
-												<td>Order subtotal</td>
+												<td>Subtotal</td>
 												<th>&pound;35,000.00</th>
 											</tr>
 											<tr>
@@ -122,7 +120,7 @@
 										</tbody>
 									</table>
 								</div>
-							</div>
+							<!-- </div> -->
 						</div>
 						<div class="panel panel-default">
 							<div class="panel-heading">
