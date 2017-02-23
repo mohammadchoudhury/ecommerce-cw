@@ -222,3 +222,12 @@ section {
  #order-summary .table th {
  	vertical-align: middle;
  }
+
+ /*----- LOGIN -----*/
+ #error .alert {
+ 	margin-bottom: 5px;
+ }
+
+ #error + .form-group {
+ 	margin-top: 15px;
+ }
