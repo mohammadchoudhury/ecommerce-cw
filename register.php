@@ -42,14 +42,38 @@
 								<div id="error"></div>
 								<div class="form-group">
 									<div class="input-group">
+										<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+										<input type="text" class="form-control" name="fname" placeholder="First Name">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="input-group">
+										<span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
+										<input type="text" class="form-control" name="lname" placeholder="Last Name">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="input-group">
 										<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-										<input id="email" type="text" class="form-control" name="email" placeholder="Email">
+										<input type="text" class="form-control" name="email" placeholder="Email">
 									</div>
 								</div>
 								<div class="form-group">
 									<div class="input-group">
 										<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-										<input id="password" type="password" class="form-control" name="password" placeholder="Password">
+										<input type="password" class="form-control" name="password" placeholder="Password">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="input-group">
+										<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+										<input type="password" class="form-control" name="cpassword" placeholder="Confirm Password">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="input-group">
+										<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+										<input type="date" class="form-control" name="dob" placeholder="Date">
 									</div>
 								</div>
 							</div>
@@ -64,22 +88,11 @@
 		</div>
 	</section>
 
-
 	<?php include 'footer.php'; ?>
 
 	<script src="js//jquery.js"></script>
 	<script src="js/bootstrap.min.js"></script>
-
-	<script type="text/javascript">
-		function validateRegister() {
-			var form = document.getElementById("register_form");
-			var email = form['email'].value;
-			var password = form['password'].value;
-			var errors = "";
-			document.getElementById("error").innerHTML = errors;
-			return !errors;
-		}
-	</script>
+	<script src="js/script.js"></script>
 
 </body>
 </html>

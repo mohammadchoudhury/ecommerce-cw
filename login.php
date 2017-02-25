@@ -69,25 +69,7 @@
 
 	<script src="js//jquery.js"></script>
 	<script src="js/bootstrap.min.js"></script>
-
-	<script type="text/javascript">
-		function validateLogin() {
-			var form = document.getElementById("login_form");
-			var email = form['email'].value;
-			var password = form['password'].value;
-			var errors = "";
-			if (!email || !password) {
-				errors += "<div class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert'><span>&times;</span></button>Must enter username and password</div>";
-			}
-			var email_regex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-			if (!email_regex.test(email)) {
-				errors += "<div class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert'><span>&times;</span></button>Email address is invalid</div>";
-			}
-			console.log(errors == '');
-			document.getElementById("error").innerHTML = errors;
-			return !errors;
-		}
-	</script>
+	<script src="js/script.js"></script>
 
 </body>
 </html>
