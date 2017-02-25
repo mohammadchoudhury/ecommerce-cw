@@ -21,12 +21,13 @@ function validateRegister() {
 	var email = form['email'].value;
 	var password = form['password'].value;
 	var cpassword = form['cpassword'].value;
+	var phone = form['phone'].value;
 	var errors = [];
 
-	if (!fname || !lname || !email || !password || !cpassword) {
-		errors.push('Must fill in all fields');
+	if (!fname || !lname) {
+		errors.push('Please enter your name');
 	}
-	var name_regex = /^[a-zA-Z]+(-)?[a-zA-Z]*$/
+	var name_regex = /^[a-zA-Z]+(-)?[a-zA-Z]*$/;
 	if (fname && !name_regex.test(fname)) {
 		errors.push("First name must not have special characters");
 	}
@@ -43,6 +44,10 @@ function validateRegister() {
 	var pwd_regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/;
 	if (!pwd_regex.test(password)) {
 		errors.push('Passwords must have at least one lowercase character, one uppercase character and one digit');
+	}
+	var phone_regex = /^\s*\(?(020[7,8]{1}\)?[ ]?[1-9]{1}[0-9{2}[ ]?[0-9]{4})|(0[1-8]{1}[0-9]{3}\)?[ ]?[1-9]{1}[0-9]{2}[ ]?[0-9]{3})\s*$/;
+	if (!phone_regex.test(phone)) {
+		errors.push("Please enter a valid phone/mobile number");
 	}
 	document.getElementById("error").innerHTML = generateErrorMessages(errors);
 	return !errors;

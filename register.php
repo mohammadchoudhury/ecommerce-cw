@@ -42,7 +42,7 @@
 								<div id="error"></div>
 								<div class="form-group">
 									<div class="input-group">
-										<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+										<span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
 										<input type="text" class="form-control" name="fname" placeholder="First Name">
 									</div>
 								</div>
@@ -72,8 +72,8 @@
 								</div>
 								<div class="form-group">
 									<div class="input-group">
-										<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-										<input type="date" class="form-control" name="dob" placeholder="Date">
+										<span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></i></span>
+										<input type="date" class="form-control" name="phone" placeholder="Phone Number">
 									</div>
 								</div>
 							</div>
