@@ -204,7 +204,8 @@ section {
  	width: 60px;
  }
 
- #basket img {
+ #basket img,
+ #order-review img {
  	height: 50px;
  }
 
@@ -213,7 +214,8 @@ section {
  }
 
  #basket .table,
- #order-summary .table {
+ #order-summary .table,
+ #order-review .table {
  	margin-bottom: 0px;
  }
  
