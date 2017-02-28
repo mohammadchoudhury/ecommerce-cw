@@ -43,13 +43,13 @@
 								<div class="form-group">
 									<div class="input-group">
 										<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-										<input id="email" type="text" class="form-control" name="email" placeholder="Email">
+										<input type="text" class="form-control" name="email" placeholder="Email">
 									</div>
 								</div>
 								<div class="form-group">
 									<div class="input-group">
 										<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-										<input id="password" type="password" class="form-control" name="password" placeholder="Password">
+										<input type="password" class="form-control" name="password" placeholder="Password">
 									</div>
 								</div>
 							</div>
