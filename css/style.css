@@ -1,3 +1,39 @@
+/*----- HEADER -----*/
+header {
+	padding: 10px 0px;
+}
+
+header h1 {
+	margin: 5px 0px;
+	text-transform: uppercase;
+	display: inline-block;
+	vertical-align: middle;
+	color: #333;
+}
+
+header img {
+	height: 46px;
+}
+
+.header-item p {
+	font-size: 15px;
+	margin: 5px 20px 5px 0px;
+	text-align: right;
+}
+
+.header-item a {
+	color: #333;
+	text-decoration: none !important;
+}
+
+.header-item i.glyphicon {
+	border: 1px solid #333;
+	border-radius: 50%;
+	padding: 10px;
+	background: white;
+	margin: 0px 5px 0px 30px;
+}
+
 /*----- NAVIGATION -----*/
 .navbar {
 	margin-bottom: 0;
@@ -60,16 +96,6 @@
 
 .affix + .container-fluid {
 	padding-top: 50px;
-}
-
- /*----- JUMBOTRON -----*/
-.jumbotron {
-	margin-bottom: 0px;
-	padding: 40px 0px;
-}
-
-.jumbotron h1 {
-	margin-top: 0px;
 }
 
 /*----- BACKGROUND -----*/

@@ -1,13 +1,25 @@
-<div class="jumbotron hidden-xs">
-	<div class="container text-center">
-		<h1 style="font-size: 45px;">DREAM CARS</h1>
-		<img class="" height="80px" src="img/logo.png">
+<header class="gray-bg hidden-xs">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-6">
+				<a href="index.php">
+					<img height="80px" src="img/logo.png">
+					<h1>Dream Cars</h1>
+				</a>
+			</div>
+			<div class="col-sm-6 header-item">
+				<p>
+					<i class="glyphicon glyphicon-phone-alt"></i> <a href="tel:+442075156521">+44 20 7515 6521</a>
+					<i class="glyphicon glyphicon-envelope"></i> <a href="mailto:info@dreamcars.co.uk">info@dreamcars.co.uk</a>
+				</p>
+			</div>
+		</div>
 	</div>
-</div>
-<nav class="navbar navbar-default" data-spy="affix" data-offset-top="220">
+</header>
+<nav class="navbar navbar-default" data-spy="affix" data-offset-top="70">
 	<div class="container-fluid">
 		<div class="navbar-header">
-			<a class="navbar-brand visible-xs" href="#">Dream Cars <img class="visible-xs-inline" height="20px" src="img/logo-white.png"></a>
+			<a class="navbar-brand visible-xs" href="index.php">Dream Cars <img class="visible-xs-inline" height="20px" src="img/logo-white.png"></a>
 			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation">
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
