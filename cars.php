@@ -35,6 +35,18 @@
 					<div class="panel-group">
 						<div class="panel panel-default" id="order-summary">
 							<div class="panel-heading">
+								<h3 class="text-uppercase">Search Car</h3>
+							</div>
+							<div class="panel-body">
+								<form action="" method="get">
+									<label for="">Name of car</label>
+									<input type="text" name="" class="form-control" placeholder="Enter name of car"><br>
+									<button type="submit" class="btn btn-primary form-control">Search</button>
+								</form>
+							</div>
+						</div>
+						<div class="panel panel-default" id="order-summary">
+							<div class="panel-heading">
 								<h3 class="text-uppercase">Filter Results</h3>
 							</div>
 							<div class="panel-body">
@@ -94,6 +106,7 @@
 					}
 					.car-listing h3 {
 						font-weight: 900;
+						margin-top: 0px;
 					}
 					.car-listing .img {
 						padding-left: 0px;
