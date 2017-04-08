@@ -33,7 +33,7 @@
 			<div class="row">
 				<div class="col-md-3">
 					<div class="panel-group">
-						<div class="panel panel-default" id="order-summary">
+						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h3 class="text-uppercase">Search Car</h3>
 							</div>
@@ -45,7 +45,7 @@
 								</form>
 							</div>
 						</div>
-						<div class="panel panel-default" id="order-summary">
+						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h3 class="text-uppercase">Filter Results</h3>
 							</div>
@@ -80,6 +80,13 @@
 											<option>£30000</option>
 											<option>£50000</option>
 										</select><br>
+										<label>Category</label>
+										<div class="text-center">
+											<label class="checkbox-inline"><input type="checkbox" name="" value="">Hatchback</label>
+											<label class="checkbox-inline"><input type="checkbox" name="" value="">Hatchback</label>
+											<label class="checkbox-inline"><input type="checkbox" name="" value="">Coupe</label>
+											<label class="checkbox-inline"><input type="checkbox" name="" value="">SUV</label>
+										</div>
 									</div>
 									<button type="submit" class="btn btn-primary form-control">Filter</button>
 								</form>

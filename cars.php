@@ -33,7 +33,7 @@
 			<div class="row">
 				<div class="col-md-3">
 					<div class="panel-group">
-						<div class="panel panel-default" id="order-summary">
+						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h3 class="text-uppercase">Search Car</h3>
 							</div>
@@ -45,7 +45,7 @@
 								</form>
 							</div>
 						</div>
-						<div class="panel panel-default" id="order-summary">
+						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h3 class="text-uppercase">Filter Results</h3>
 							</div>
