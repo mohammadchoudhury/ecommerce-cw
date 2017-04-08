@@ -57,18 +57,23 @@
 									<li data-target="#myCarousel" data-slide-to="1"></li>
 									<li data-target="#myCarousel" data-slide-to="2"></li>
 									<li data-target="#myCarousel" data-slide-to="3"></li>
+									<li data-target="#myCarousel" data-slide-to="4"></li>
 								</ol>
 								<div class="carousel-inner">
 									<div class="item active">
-										<img src="img/carousel/Bugatti-Veyron.jpg">
+										<img src="img/bmw/3-series-1.jpg">
 									</div>
-
 									<div class="item">
-										<img src="img/carousel/Ferrari-488-Spider.jpg">
+										<img src="img/bmw/3-series-2.jpg">
 									</div>
-
 									<div class="item">
-										<img src="img/carousel/McLaren-650S.jpg">
+										<img src="img/bmw/3-series-3.jpg">
+									</div>
+									<div class="item">
+										<img src="img/bmw/3-series-4.jpg">
+									</div>
+									<div class="item">
+										<img src="img/bmw/3-series-5.jpg">
 									</div>
 								</div>
 								<!-- Left and right controls -->
