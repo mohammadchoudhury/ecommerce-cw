@@ -13,11 +13,6 @@
 			width: 100%;
 			margin: auto;
 		}
-		body {
-			background-image:  url("img/bg.jpg");
-			background-repeat: no-repeat;
-			background-attachment: fixed; 
-		}
 	</style>
 </head>
 <body>
@@ -27,7 +22,6 @@
 			<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
 			<li data-target="#myCarousel" data-slide-to="1"></li>
 			<li data-target="#myCarousel" data-slide-to="2"></li>
-			<li data-target="#myCarousel" data-slide-to="3"></li>
 		</ol>
 		<div class="carousel-inner">
 			<div class="item active">
