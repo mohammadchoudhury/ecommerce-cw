@@ -4,14 +4,14 @@ function validateLogin() {
 	var password = form['password'].value;
 	var errors = [];
 	if (!email || !password) {
-		errors.push("Must enter username and password");
+		errors.push("Must enter email and password");
 	}
 	var email_regex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 	if (!email_regex.test(email)) {
 		errors.push("Email address is invalid");
 	}
 	document.getElementById("error").innerHTML = generateErrorMessages(errors);
-	return !errors;
+	return errors.length == 0;
 }
 
 function validateRegister() {
@@ -25,7 +25,7 @@ function validateRegister() {
 	var errors = [];
 
 	if (!fname || !lname) {
-		errors.push('Please enter your name');
+		errors.push("Please enter your name");
 	}
 	var name_regex = /^[a-zA-Z]+(-)?[a-zA-Z]*$/;
 	if (fname && !name_regex.test(fname)) {
@@ -36,21 +36,21 @@ function validateRegister() {
 	}
 	var email_regex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 	if (!email_regex.test(email)) {
-		errors.push('Please enter a valid email address');
+		errors.push("Please enter a valid email address");
 	}
 	if (password != cpassword) {
-		errors.push('Passwords do not match');
+		errors.push("Passwords do not match");
 	}
 	var pwd_regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/;
 	if (!pwd_regex.test(password)) {
-		errors.push('Passwords must have at least one lowercase character, one uppercase character and one digit');
+		errors.push("Passwords must have at least one lowercase character, one uppercase character, one digit and be minimum of 8 characters");
 	}
 	var phone_regex = /^\s*\(?(020[7,8]{1}\)?[ ]?[1-9]{1}[0-9{2}[ ]?[0-9]{4})|(0[1-8]{1}[0-9]{3}\)?[ ]?[1-9]{1}[0-9]{2}[ ]?[0-9]{3})\s*$/;
 	if (!phone_regex.test(phone)) {
 		errors.push("Please enter a valid phone/mobile number");
 	}
 	document.getElementById("error").innerHTML = generateErrorMessages(errors);
-	return !errors;
+	return errors.length == 0;
 }
 
 function generateErrorMessages(errors_arr) {
