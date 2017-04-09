@@ -123,6 +123,7 @@
 					.car-listing a.btn {
 						font-weight: bold;
 						padding: 10px;
+						margin-bottom: 15px;
 					}
 					.car-listing ul {
 						list-style: none;
@@ -190,6 +191,13 @@
 				+ '&sortby=' + document.getElementsByName('sortby')[0].value
 				+ '&grid=' + grid
 				});
+		}
+		function updateBasket(action, id, result) {
+			$.ajax({
+				url: "ajax/basket.php",
+				type: 'POST',
+				data: action + "=" + id
+			});
 		}
 		var prices = [0, 10000, 30000, 50000, 100000, 200000];
 		function updateMax() {
