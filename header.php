@@ -30,8 +30,10 @@
 			<ul class="nav navbar-nav navbar-left">
 				<li><a href="index.php">Home</a></li>
 				<li class="dropdown">
-					<a href="cars.php" class="dropdown-toggle" data-toggle="dropdown">Cars <span class="caret"></span></a>
+					<a class="dropdown-toggle" data-toggle="dropdown">Cars <span class="caret"></span></a>
 					<ul class="dropdown-menu">
+						<li><a href="cars_ajax.php">All</a></li>
+						<hr>
 						<li><a href="#">Audi</a></li>
 						<li><a href="#">Bentley</a></li>
 						<li><a href="#">BMW</a></li>
