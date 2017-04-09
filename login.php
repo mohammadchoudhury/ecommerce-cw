@@ -1,3 +1,65 @@
+<?php
+include_once 'config.inc.php';
+include_once 'functions.php';
+session_start();
+if (!empty($_SESSION['user']['email'])) {
+	header('Location: index.php');
+}
+$msg = [];
+if (isset($_POST) && !empty($_POST)) {
+	$email = $_POST['email'];
+	$password = $_POST['password'];
+	if (!$email || !$password) {
+		array_push($msg, array("Must enter email and password", 0));
+	}
+	$email_regex = "/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i";
+	if (!preg_match($email_regex, $email)) {
+		array_push($msg, array("Please enter a valid email address", 0));
+	}
+	if (!count($msg)) {
+		$sql = "SELECT first_name, last_name, password FROM tbl_customer WHERE email = ?";
+		$stmt = $mysqli->prepare($sql);
+		if ($stmt){
+			$stmt->bind_param("s",$email);
+			$stmt->execute();
+			$stmt->store_result();
+			if ($stmt->num_rows === 1) {
+				$stmt->bind_result($fname, $lname, $password_db);
+				$stmt->fetch();
+				if ($password === $password_db) {
+					$_SESSION['user'] = array('email' => $email, 'name' => $fname.' '.$lname);
+					header('Location: index.php');
+				} else {
+					array_push($msg, array("Incorrect password entered", 0));
+				}
+			} else {
+				array_push($msg, array("Incorrect email entered", 0));
+			}
+		} else {
+			array_push($msg, array("An error has occurred on our end<br>Please try again later", 0));
+		}
+	} else {
+		echo "ERRORS";
+	}
+
+
+	// var form = document.getElementById("login_form");
+	// var email = form['email'].value;
+	// var password = form['password'].value;
+	// var errors = [];
+	// if (!email || !password) {
+	// 	errors.push("Must enter username and password");
+	// }
+	// var email_regex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+	// if (!email_regex.test(email)) {
+	// 	errors.push("Email address is invalid");
+	// }
+
+
+
+
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,11 +101,11 @@
 								<p class="lead text-center">Already a customer?</p>
 							</div>
 							<div class="panel-body">
-								<div id="error"></div>
+								<div id="error"><?=generateMessages($msg);?></div>
 								<div class="form-group">
 									<div class="input-group">
 										<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-										<input type="text" class="form-control" name="email" placeholder="Email">
+										<input type="text" class="form-control" name="email" placeholder="Email" value="<?=(isset($_GET['email'])?$_GET['email']:(isset($_POST['email'])?$_POST['email']:''))?>">
 									</div>
 								</div>
 								<div class="form-group">
