@@ -49,7 +49,7 @@
 			<hr class="visible-xs">
 			<ul class="nav navbar-nav navbar-right">
 				<?php @session_start(); ?>
-				<li><a href="basket.php"><span class="glyphicon glyphicon-shopping-cart"></span> Basket <span class="badge">0</span></a></li>
+				<li><a href="basket.php"><span class="glyphicon glyphicon-shopping-cart"></span> Basket <span class="badge"><?=count($_SESSION['cars'])?></span></a></li>
 				<?php if (!empty($_SESSION['user']['email'])): ?>
 				<li><a href="#"><span class="glyphicon glyphicon-user"></span> <?=$_SESSION['user']['name']?></a></li>
 				<li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
