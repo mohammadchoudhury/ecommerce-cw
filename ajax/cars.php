@@ -47,7 +47,7 @@ if (!empty($_GET['grid']) && $_GET['grid'] == "on"):
 		<div class="col-md-6">
 			<div class="car-listing gray-bg">
 				<div class="img">
-					<img src="https://is2-ssl.mzstatic.com/image/thumb/Purple111/v4/b1/bd/b0/b1bdb0f4-820f-8820-f48a-d95aa3b06f2d/source/256x256bb.jpg" class="img-responsive" width="100%">
+					<img src="<?=$row['image_url']?>" width="100%">
 				</div>
 				<div class="car-details">
 					<h3><?=$row['make_name'] . " " .$row['model']?></h3>
@@ -76,7 +76,7 @@ else:
 
 <div class="car-listing gray-bg">
 	<div class="col-md-4 img">
-		<img src="https://is2-ssl.mzstatic.com/image/thumb/Purple111/v4/b1/bd/b0/b1bdb0f4-820f-8820-f48a-d95aa3b06f2d/source/256x256bb.jpg" class="img-responsive" width="100%">
+		<img src="<?=$row['image_url']?>" class="img-responsive" width="100%">
 	</div>
 	<div class="col-md-8 car-details">
 		<h3><?=$row['make_name'] . " " .$row['model']?></h3>
