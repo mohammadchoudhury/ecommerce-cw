@@ -21,4 +21,5 @@ if (!empty($_POST['del'])) {
 		}
 	}
 }
+echo sizeof($_SESSION['cars']);
 ?>

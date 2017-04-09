@@ -195,6 +195,9 @@
 		function updateBasket(action, id, result) {
 			$.ajax({
 				url: "ajax/basket.php",
+				success: function(result){
+					$(".nav li span.badge").html(result);
+				},
 				type: 'POST',
 				data: action + "=" + id
 			});
