@@ -38,26 +38,7 @@ if (isset($_POST) && !empty($_POST)) {
 		} else {
 			array_push($msg, array("An error has occurred on our end<br>Please try again later", 0));
 		}
-	} else {
-		echo "ERRORS";
 	}
-
-
-	// var form = document.getElementById("login_form");
-	// var email = form['email'].value;
-	// var password = form['password'].value;
-	// var errors = [];
-	// if (!email || !password) {
-	// 	errors.push("Must enter username and password");
-	// }
-	// var email_regex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-	// if (!email_regex.test(email)) {
-	// 	errors.push("Email address is invalid");
-	// }
-
-
-
-
 }
 ?>
 <!DOCTYPE html>
