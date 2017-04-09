@@ -30,7 +30,7 @@
 			<ul class="nav navbar-nav navbar-left">
 				<li><a href="index.php">Home</a></li>
 				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Cars <span class="caret"></span></a>
+					<a href="cars.php" class="dropdown-toggle" data-toggle="dropdown">Cars <span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><a href="#">Audi</a></li>
 						<li><a href="#">Bentley</a></li>
@@ -49,8 +49,14 @@
 			<hr class="visible-xs">
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="basket.php"><span class="glyphicon glyphicon-shopping-cart"></span> Basket <span class="badge">0</span></a></li>
+				<?php @session_start(); 
+				if (!empty($_SESSION['user']['email'])): ?>
+				<li><a href="#"><span class="glyphicon glyphicon-user"></span> <?=$_SESSION['user']['name']?></a></li>
+				<li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+				<?php else: ?>
 				<li><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
 				<li><a href="register.php"><span class="glyphicon glyphicon-user"></span> Regisiter</a></li>
+				<?php endif; ?>
 			</ul>
 		</div>
 	</div>
