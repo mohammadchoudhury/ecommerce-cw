@@ -9,7 +9,10 @@
 	<link rel="stylesheet" type="text/css" href="css/style.css">	
 </head>
 <body>
-	<?php include 'header.php'; ?>
+	<?php
+		include 'header.php';
+		include_once 'config.inc.php';
+	?>
 	
 	<div id="banner">
 		<div class="container-fluid">
@@ -56,34 +59,43 @@
 										<label>Make</label>
 										<select class="form-control" name="make" onchange="getCars();">
 											<option value="">--- Choose a Make ---</option>
-											<option value="1">Audi</option>
-											<option value="4">BMW</option>
-										</select><br>
-										<label>Model</label>
-										<select class="form-control" name="model" onchange="getCars();">
-											<option selected value="">--- Choose a Model ---</option>
-											<option>3 Series</option>
-											<option>R8</option>
+											<?php
+											$sql = "SELECT * FROM tbl_make";
+											$stmt = $mysqli->prepare($sql);
+											$stmt->execute();
+											$result = $stmt->get_result();
+											$num_rows = $result->num_rows;
+											while ($make = $result->fetch_assoc()) {
+												echo "<option value='$make[make_id]'>$make[make_name]</option>";
+											}
+											?>
 										</select><br>
 										<label>Min Price</label>
 										<select class="form-control" name="minprice" onchange="updateMax();getCars();">
 											<option value="">--- Choose a min price ---</option>
 											<option value="0">£0</option>
-											<option value="10000">£10000</option>
-											<option value="30000">£30000</option>
+											<option value="20000">£20000</option>
 											<option value="50000">£50000</option>
 											<option value="100000">£100000</option>
 											<option value="200000">£200000</option>
+											<option value="500000">£500000</option>
+											<option value="750000">£750000</option>
+											<option value="1000000">£1000000</option>
+											<option value="1500000">£1500000</option>
+											<option value="2000000">£2000000</option>
 										</select><br>
 										<label>Max Price</label>
 										<select class="form-control" name="maxprice" onchange="getCars();">
 											<option value="">--- Choose a max price ---</option>
-											<option value="0">£0</option>
-											<option value="10000">£10000</option>
-											<option value="30000">£30000</option>
+											<option value="20000">£20000</option>
 											<option value="50000">£50000</option>
 											<option value="100000">£100000</option>
 											<option value="200000">£200000</option>
+											<option value="500000">£500000</option>
+											<option value="750000">£750000</option>
+											<option value="1000000">£1000000</option>
+											<option value="1500000">£1500000</option>
+											<option value="2000000">£2000000</option>
 										</select>
 									</div>
 									<button type="submit" class="btn btn-primary form-control">Filter</button><br><br>
@@ -141,7 +153,7 @@
 					<div class="panel panel-default">
 						<div class="panel-heading clearfix">
 							<div class="pull-left">
-								<h4>1 - 10 of 50 Listings</h4>
+								<h4>1 - 17 of 17 Listings</h4>
 							</div>
 							<div class="pull-right">
 								<p>Sort by:</p>
@@ -166,8 +178,9 @@
 
 	<?php include 'footer.php'; ?>
 
-	<script src="js//jquery.js"></script>
+	<script src="js/jquery.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+	<script src="js/script.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {getCars('off');});
 		$("[name=make]").val(<?=(isset($_GET['make'])?$_GET['make']:'')?>);
@@ -184,7 +197,6 @@
 				type: 'GET',
 				data: 
 				'&make=' + document.getElementsByName('make')[0].value
-				+ '&model=' + document.getElementsByName('model')[0].value
 				+ '&minprice=' + document.getElementsByName('minprice')[0].value
 				+ '&maxprice=' + document.getElementsByName('maxprice')[0].value
 				+ '&name=' + document.getElementsByName('name')[0].value
@@ -192,6 +204,7 @@
 				+ '&grid=' + grid
 				});
 		}
+
 		function updateBasket(action, id, result) {
 			$.ajax({
 				url: "ajax/basket.php",
@@ -202,7 +215,8 @@
 				data: action + "=" + id
 			});
 		}
-		var prices = [0, 10000, 30000, 50000, 100000, 200000];
+
+		var prices = [0, 20000, 50000, 100000, 200000, 500000, 750000, 1000000, 1500000, 2000000];
 		function updateMax() {
 			var elm = document.getElementsByName('maxprice')[0];
 			var min = document.getElementsByName('minprice')[0].value;

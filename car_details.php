@@ -61,7 +61,7 @@
 							$row = $result->fetch_assoc();
 							?>
 							<div class="panel-heading clearfix">
-								<h3><?=$row['make_name']." ".$row['model']?> - &pound;<?=$row['price']?></span></h3>
+								<h3><b><?=$row['make_name']." ".$row['model']?></b> - &pound;<?=$row['price']?></span></h3>
 							</div>
 							<div class="panel-body">
 							<?php
@@ -90,21 +90,6 @@
 										$i++;
 									}
 									?>
-										<!-- <div class="item active">
-											<img src="img/bmw/3-series-1.jpg">
-										</div>
-										<div class="item">
-											<img src="img/bmw/3-series-2.jpg">
-										</div>
-										<div class="item">
-											<img src="img/bmw/3-series-3.jpg">
-										</div>
-										<div class="item">
-											<img src="img/bmw/3-series-4.jpg">
-										</div>
-										<div class="item">
-											<img src="img/bmw/3-series-5.jpg">
-										</div> -->
 									</div>
 									<!-- Left and right controls -->
 									<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
@@ -309,7 +294,7 @@
 											<div class="col-md-12">
 												<form method="POST" action="">
 													<textarea rows="5" id="new-review" class="form-control animated" placeholder="Enter your review here..." name="comment" cols="50"></textarea>
-													<input type="hidden" id="rating" name="" value="0">
+													<input type="hidden" id="rating" name="rating" value="0">
 													<br>
 													<div class="pull-left">
 														<div id="stars"><span class="glyphicon glyphicon-star-empty" onclick="setRating(1);"></span><span class="glyphicon glyphicon-star-empty" onclick="setRating(2);"></span><span class="glyphicon glyphicon-star-empty" onclick="setRating(3);"></span><span class="glyphicon glyphicon-star-empty" onclick="setRating(4);"></span><span class="glyphicon glyphicon-star-empty" onclick="setRating(5);"></span></div>
@@ -364,24 +349,17 @@
 						<div class="panel-group">
 							<div class="panel panel-default">
 								<div class="panel-heading">
-									<h3 class="text-uppercase">Finance Calculator</h3>
+									<h3 class="text-uppercase">Buy</h3>
 								</div>
 								<div class="panel-body">
 									<form action="" method="get">
 										<div class="form-group">
-											<label for="">Price</label>
-											<input type="number" name="Price" class="form-control" value="<?=$row['price']?>" disabled><br>
-											<label for="">Model</label>
-											<select class="form-control">
-												<option selected value="">--- Choose years ---</option>
-												<option>1</option>
-												<option>2</option>
-												<option>3</option>
-												<option>4</option>
-												<option>5</option>
-											</select>
+											<label>Quantity</label>
+											<input type="number" name="quantity" class="form-control" min="1" max="9" placeholder="Enter quantity" value="1" required><br>
+											<label>Price</label>
+											<div id="price">&pound;<?=$row['price']?></div>
 										</div>
-										<button type="submit" class="btn btn-primary form-control">Check</button>
+										<button type="button" class="btn btn-primary form-control" onclick="updateBasket('add', <?=$row['car_id']?>);">Add to basket</button>
 									</form>
 								</div>
 							</div>
@@ -425,8 +403,9 @@
 
 <?php include 'footer.php'; ?>
 
-<script src="js//jquery.js"></script>
+<script src="js/jquery.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/script.js"></script>
 <script type="text/javascript">
 	function setRating(rating) {
 		console.log(rating);
@@ -445,6 +424,18 @@
 			s.childNodes[i].className = 'glyphicon glyphicon-star-empty';
 			i++;
 		}
+	}
+
+	function updateBasket(action, id, result) {
+		$.ajax({
+			url: "ajax/basket.php",
+			success: function(result){
+				$(".nav li span.badge").html(result);
+			},
+			type: 'POST',
+			data: action + "=" + id
+			+ "&quantity=" + document.getElementsByName("quantity")[0].value
+		});
 	}
 
 </script>

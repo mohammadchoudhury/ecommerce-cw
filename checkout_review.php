@@ -1,3 +1,38 @@
+<?php
+include_once 'config.inc.php';
+include_once 'functions.php';
+session_start();
+$msg = [];
+if (isset($_POST) && !empty($_POST)) {
+	$c_id = $_SESSION['user']['c_id'];
+	$type = $_POST['type'];
+	$card_number = $_POST['card_number'];
+	$month = $_POST['month'];
+	$year = $_POST['year'];
+	$cvv = $_POST['cvv'];
+	$holder_name = $_POST['holder_name'];
+
+	if (!validCard($card_number)) {
+		array_push($msg, array("Card number is invalid", 0));
+	}
+
+	if (!count($msg)) {
+		$sql = "INSERT INTO tbl_payment_card(customer_id, type_code, card_number, month, year, cvv, holder_name) value (?, ?, ?, ?, ?, ?, ?)";
+		$stmt = $mysqli->prepare($sql);
+		if ($stmt){
+			$stmt->bind_param("issssss",$c_id, $type, $card_number, $month, $year, $cvv, $holder_name);
+			if ($stmt->execute()) {
+				$_SESSION['checkout']['payment'] = $mysqli->insert_id;
+				header('Location: checkout_review.php');
+			} else {
+				array_push($msg, array("An error has occurred on our end<br>Please try again later", 0));
+			}
+		} else {
+			array_push($msg, array("An error has occurred on our end<br>Please try again later", 0));
+		}
+	}
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +45,6 @@
 </head>
 <body>
 	<?php include 'header.php'; ?>
-	
 	<div id="banner">
 		<div class="container-fluid">
 			<div class="row">
@@ -32,26 +66,26 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-9" id="checkout">
-				<form action="" method="get">
+					<!-- <form action="" method="get"> -->
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<ul class="nav nav-pills nav-justified">
-								<li class="active">
+								<li class="">
 									<a href="#address" data-toggle="tab">
 										<i class="glyphicon glyphicon-map-marker"></i> Address
 									</a>
 								</li>
-								<li class="disabled">
+								<!-- <li class="disabled">
 									<a href="#delivery-method" data-toggle="tab" disabled>
 										<i class="glyphicon glyphicon-road"></i> Delivery Method
 									</a>
-								</li>
-								<li class="disabled">
+								</li> -->
+								<li class="">
 									<a href="#payment" data-toggle="tab">
 										<i class="glyphicon glyphicon-credit-card"></i> Payment
 									</a>
 								</li>
-								<li class="disabled">
+								<li class="active">
 									<a href="#order-review" data-toggle="tab">
 										<i class="glyphicon glyphicon-shopping-cart"></i> Order Review
 									</a>
@@ -94,86 +128,14 @@
 								pointer-events: none;
 							}
 						</style>
-						<div class="row">
-							<div class="col-xs-12">
-								<div class="tab-content">
-									<div class="panel-body tab-pane fade in active" id="address">
-										<div class="col-sm-6">
-											<div class="btn btn-primary" data-toggle="buttons">
-												<h3>Home</h3>
-												<p>Northampton Square, London, EC1V 0HB</p>
-												<input type="radio" name="address" value="1" required>
-											</div>
-										</div>
-										<div class="col-sm-6">
-											<div class="btn btn-primary" data-toggle="buttons">
-												<h3>Office</h3>
-												<p>Northampton Square, London, EC1V 0HB</p>
-												<input type="radio" name="address" value="2" required>
-											</div>
-										</div>
-										<div class="col-sm-6">
-											<div class="btn btn-primary" data-toggle="buttons">
-												<h3>Warehouse</h3>
-												<p>Northampton Square, London, EC1V 0HB</p>
-												<input type="radio" name="address" value="3" required>
-											</div>
-										</div>
-										<div class="col-sm-6">
-											<div class="btn btn-primary" data-toggle="buttons">
-												<h3>Head Office</h3>
-												<p>Northampton Square, London, EC1V 0HB</p>
-												<input type="radio" name="address" value="4" required>
-											</div>
-										</div>
-									</div>
-									<div class="panel-body tab-pane fade" id="delivery-method">
-										<div class="col-sm-6">
-											<div class="btn btn-primary" data-toggle="buttons">
-												<h3>Next Day</h3>
-												<p>Free next working day delivery</p>
-												<input type="radio" name="delivery">
-											</div>
-										</div>
-										<div class="col-sm-6">
-											<div class="btn btn-primary" data-toggle="buttons">
-												<h3>Weekend</h3>
-												<p>Delivery during weekend</p>
-												<input type="radio" name="delivery">
-											</div>
-										</div>
-										<div class="col-sm-6">
-											<div class="btn btn-primary" data-toggle="buttons">
-												<h3>Anytime hour slot</h3>
-												<p>Choose an hour any day between 9AM - 9PM</p>
-												<input type="radio" name="delivery">
-											</div>
-										</div>
-									</div>
-									<div class="panel-body tab-pane fade" id="payment">
-										<div class="col-sm-6">
-											<div class="btn btn-primary" data-toggle="buttons">
-												<h3>Paypal</h3>
-												<p>Use paypal gateway</p>
-												<input type="radio" name="payment">
-											</div>
-										</div>
-										<div class="col-sm-6">
-											<div class="btn btn-primary" data-toggle="buttons">
-												<h3>Credit/Debit Card</h3>
-												<p>Pay using your saved cards</p>
-												<input type="radio" name="payment">
-											</div>
-										</div>
-										<div class="col-sm-6">
-											<div class="btn btn-primary" data-toggle="buttons">
-												<h3>Cash</h3>
-												<p>Cash on delivery</p>
-												<input type="radio" name="payment">
-											</div>
-										</div>
-									</div>
-									<div class="tab-pane fade" id="order-review">
+						<div class="panel-body">
+							
+							<div><?=generateMessages($msg)?></div>
+							<div class="row">
+								<div class="col-xs-12">
+									<div class="tab-content">
+										<!-- <div class="panel-body tab-pane fade in active" id="order-review">
+											<div class="tab-pane fade" id="order-review"> -->
 										<div class="table-responsive">
 											<table class="table table-bordered">
 												<thead>
@@ -212,24 +174,21 @@
 											</table>
 										</div>
 									</div>
+										<!-- </div>
+									</div> -->
 								</div>
 							</div>
 						</div>
 						<div class="panel-footer clearfix">
-							<div class="pull-left">
-								<a href="#" class="btn btn-danger"><i class="glyphicon glyphicon-arrow-left"></i> Continue shopping</a>
-							</div>
 							<div class="pull-right">
-								<a id="nextTab" class="btn btn-primary" href="#delivery-method" onclick="selectTab(this.hash);">Continue <i class="glyphicon glyphicon-arrow-right"></i></a>
-								<button type="submit" class="btn btn-primary" style="display: none;">Proceed <i class="glyphicon glyphicon-arrow-right"></i>
-								</button>
+								<button id="nextTab" class="btn btn-primary" type="submit" form="form">Continue <i class="glyphicon glyphicon-arrow-right"></i></button>
 							</div>
 						</div>
 					</div>
-				</form>
+					<!-- </form> -->
 				</div>
 				<div class="col-md-3">
-					<div class="panel panel-default" id="order-summary">
+					<!-- <div class="panel panel-default" id="order-summary">
 						<div class="panel-heading">
 							<h3 class="text-uppercase">Order summary</h3>
 						</div>
@@ -255,7 +214,7 @@
 								</tbody>
 							</table>
 						</div>
-					</div>
+					</div> -->
 				</div>
 			</div>
 		</div>
@@ -263,7 +222,7 @@
 
 	<?php include 'footer.php'; ?>
 
-	<script src="js//jquery.js"></script>
+	<script src="js/jquery.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script type="text/javascript">
 		selectTab();
@@ -285,24 +244,24 @@
 			switch(getAnchor()) {
 				case '':
 				case 'address':
-					nextTab.style.display = 'inline-block';
-					nextTab.nextElementSibling.style.display = "none";
-					nextTab.hash = "delivery-method";
-					break;
+				nextTab.style.display = 'inline-block';
+				nextTab.nextElementSibling.style.display = "none";
+				nextTab.hash = "delivery-method";
+				break;
 				case 'delivery-method':
-					nextTab.style.display = 'inline-block';
-					nextTab.nextElementSibling.style.display = "none";
-					nextTab.hash = "payment";
-					break;
+				nextTab.style.display = 'inline-block';
+				nextTab.nextElementSibling.style.display = "none";
+				nextTab.hash = "payment";
+				break;
 				case 'payment':
-					nextTab.style.display = 'inline-block';
-					nextTab.nextElementSibling.style.display = "none";
-					nextTab.hash = "order-review";
-					break;
+				nextTab.style.display = 'inline-block';
+				nextTab.nextElementSibling.style.display = "none";
+				nextTab.hash = "order-review";
+				break;
 				case 'order-review':
-					nextTab.style.display = 'none';
-					nextTab.nextElementSibling.style.display = "inline-block";
-					break;
+				nextTab.style.display = 'none';
+				nextTab.nextElementSibling.style.display = "inline-block";
+				break;
 				default:
 			}
 		});

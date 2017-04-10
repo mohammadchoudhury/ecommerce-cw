@@ -34,15 +34,17 @@
 					<ul class="dropdown-menu">
 						<li><a href="cars_ajax.php">All</a></li>
 						<hr>
-						<li><a href="#">Audi</a></li>
-						<li><a href="#">Bentley</a></li>
-						<li><a href="#">BMW</a></li>
-						<li><a href="#">Jaguar</a></li>
-						<li><a href="#">Lexus</a></li>
-						<li><a href="#">Maserati</a></li>
-						<li><a href="#">Porsche</a></li>
-						<li><a href="#">Range Rover</a></li>
-						<li><a href="#">Rolls Royce</a></li>
+						<?php
+						include_once 'config.inc.php';
+						$sql = "SELECT * FROM tbl_make";
+						$stmt = $mysqli->prepare($sql);
+						$stmt->execute();
+						$result = $stmt->get_result();
+						$num_rows = $result->num_rows;
+						while ($make = $result->fetch_assoc()) {
+							echo "<li><a href='cars_ajax.php?make=$make[make_id]'>$make[make_name]</a></li>";
+						}
+						?>
 					</ul>
 				</li>
 				<li><a href="#">Contact Us</a></li>
@@ -51,7 +53,7 @@
 			<hr class="visible-xs">
 			<ul class="nav navbar-nav navbar-right">
 				<?php @session_start(); ?>
-				<li><a href="basket.php"><span class="glyphicon glyphicon-shopping-cart"></span> Basket <span class="badge"><?=count($_SESSION['cars'])?></span></a></li>
+				<li><a href="basket.php"><span class="glyphicon glyphicon-shopping-cart"></span> Basket <span class="badge"><?=@count($_SESSION['cars'])?></span></a></li>
 				<?php if (!empty($_SESSION['user']['email'])): ?>
 				<li><a href="#"><span class="glyphicon glyphicon-user"></span> <?=$_SESSION['user']['name']?></a></li>
 				<li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>

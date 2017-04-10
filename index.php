@@ -29,7 +29,7 @@
 				<div class="carousel-caption">
 					<h1>Bugatti Veyron</h1>
 					<p>Some thing about Bugatti Veyron</p>
-					<p><a class="btn btn-lg btn-primary" href="#">Read More</a></p>
+					<p><a class="btn btn-lg btn-primary" href="car_details.php?id=16">Read More</a></p>
 				</div>
 			</div>
 
@@ -38,7 +38,7 @@
 				<div class="carousel-caption">
 					<h1>Ferrari 488 Spider</h1>
 					<p>Some thing about Ferrari 488 Spider</p>
-					<p><a class="btn btn-lg btn-primary" href="#">Read More</a></p>
+					<p><a class="btn btn-lg btn-primary" href="car_details.php?id=18">Read More</a></p>
 				</div>
 			</div>
 
@@ -47,7 +47,7 @@
 				<div class="carousel-caption">
 					<h1>McLaren 650S</h1>
 					<p>Some thing about McLaren 650S</p>
-					<p><a class="btn btn-lg btn-primary" href="#">Read More</a></p>
+					<p><a class="btn btn-lg btn-primary" href="car_details.php?id=24">Read More</a></p>
 				</div>
 			</div>
 		</div>
@@ -73,14 +73,14 @@
 					<div class="usp-item">
 						<span class="glyphicon glyphicon-list icon"></span>
 						<h2>Free advice and reviews</h2>
-						<p>We have many reviews which you may read. Or can give us a call and we'll able to help as much as possible.</p>
+						<p>We have many reviews which you may read. Or can give us a call and we'll be able to help as much as possible.</p>
 					</div>
 				</div>
 				<div class="col-sm-4">
 					<div class="usp-item">
 						<span class="glyphicon glyphicon-gbp icon"></span>
 						<h2>Car Finance Available</h2>
-						<p>Finace is available on all our vehicles. Please call us to get a quote.</p>
+						<p>Finance is available on all our vehicles. Please call us to get a quote.</p>
 					</div>
 				</div>
 				<div class="col-sm-4">
@@ -108,7 +108,7 @@
 
 	<?php include 'footer.php'; ?>
 
-	<script src="js//jquery.js"></script>
+	<script src="js/jquery.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 
 </body>

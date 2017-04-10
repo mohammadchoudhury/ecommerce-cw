@@ -17,17 +17,17 @@ if (isset($_POST) && !empty($_POST)) {
 		array_push($msg, array("Please enter a valid email address", 0));
 	}
 	if (!count($msg)) {
-		$sql = "SELECT first_name, last_name, password FROM tbl_customer WHERE email = ?";
+		$sql = "SELECT customer_id, first_name, last_name, password FROM tbl_customer WHERE email = ?";
 		$stmt = $mysqli->prepare($sql);
 		if ($stmt){
 			$stmt->bind_param("s",$email);
 			$stmt->execute();
 			$stmt->store_result();
 			if ($stmt->num_rows === 1) {
-				$stmt->bind_result($fname, $lname, $password_db);
+				$stmt->bind_result($c_id, $fname, $lname, $password_db);
 				$stmt->fetch();
-				if ($password === $password_db) {
-					$_SESSION['user'] = array('email' => $email, 'name' => $fname.' '.$lname);
+				if (hash("sha256", $password) === $password_db) {
+					$_SESSION['user'] = array('c_id' => $c_id, 'email' => $email, 'name' => $fname.' '.$lname);
 					header('Location: index.php');
 				} else {
 					array_push($msg, array("Incorrect password entered", 0));
@@ -110,7 +110,7 @@ if (isset($_POST) && !empty($_POST)) {
 
 	<?php include 'footer.php'; ?>
 
-	<script src="js//jquery.js"></script>
+	<script src="js/jquery.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/script.js"></script>
 

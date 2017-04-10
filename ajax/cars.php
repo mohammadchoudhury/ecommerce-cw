@@ -5,9 +5,6 @@ $sql = "SELECT * FROM tbl_car c, tbl_make m WHERE c.make_id = m.make_id";
 if (!empty($_GET['make'])) {
 	$sql .= " AND m.make_id = ".$mysqli->real_escape_string($_GET['make']);
 }
-if (!empty($_GET['model'])) {
-	$sql .= " AND model = '".$mysqli->real_escape_string($_GET['model'])."'";
-}
 if (!empty($_GET['minprice'])) {
 	$sql .= " AND price >= ".$mysqli->real_escape_string($_GET['minprice']);
 }

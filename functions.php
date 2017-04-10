@@ -15,7 +15,20 @@ function generateMessages($msg_arr) {
 }
 
 
-
+function validCard($card_number) {
+    $sum = 0;
+    $alt = false;
+    for($i = strlen($card_number) - 1; $i >= 0; $i--) {
+        if($alt) {
+           $temp = $card_number[$i];
+           $temp *= 2;
+           $card_number[$i] = ($temp > 9) ? $temp = $temp - 9 : $temp;
+        }
+        $sum += $card_number[$i];
+        $alt = !$alt;
+    }
+    return $sum % 10 == 0;
+}
 
 
 ?>

@@ -48,7 +48,7 @@ if (isset($_POST) && !empty($_POST)) {
 				$sql = "INSERT INTO tbl_customer(email, password, first_name, last_name, phone_number) value (?, ?, ?, ?, ?)";
 				$stmt = $mysqli->prepare($sql);
 				if ($stmt){
-					$stmt->bind_param("sssss",$email, $password, $fname, $lname, $phone);
+					$stmt->bind_param("sssss",$email, hash("sha256", $password), $fname, $lname, $phone);
 					if ($stmt->execute()) {
 						array_push($msg, array("Account successfully created<br><a href='login.php?email=$email'>Click Here</a> to sign in", 1));
 						$_POST = array();
@@ -159,7 +159,7 @@ if (isset($_POST) && !empty($_POST)) {
 
 	<?php include 'footer.php'; ?>
 
-	<script src="js//jquery.js"></script>
+	<script src="js/jquery.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/script.js"></script>
 
