@@ -48,7 +48,8 @@ if (isset($_POST) && !empty($_POST)) {
 				$sql = "INSERT INTO tbl_customer(email, password, first_name, last_name, phone_number) value (?, ?, ?, ?, ?)";
 				$stmt = $mysqli->prepare($sql);
 				if ($stmt){
-					$stmt->bind_param("sssss",$email, hash("sha256", $password), $fname, $lname, $phone);
+					$hash_password = hash("sha256", $password);
+					$stmt->bind_param("sssss",$email, $hash_password, $fname, $lname, $phone);
 					if ($stmt->execute()) {
 						array_push($msg, array("Account successfully created<br><a href='login.php?email=$email'>Click Here</a> to sign in", 1));
 						$_POST = array();
@@ -64,6 +65,7 @@ if (isset($_POST) && !empty($_POST)) {
 		} else {
 			array_push($msg, array("An error has occurred on our end<br>Please try again later", 0));
 		}
+		$stmt->close();
 	}
 }
 ?>
@@ -147,7 +149,7 @@ if (isset($_POST) && !empty($_POST)) {
 								</div>
 							</div>
 							<div class="panel-footer">
-								<button type="submit" class="btn btn-primary" form="register_form">Log in <i class="glyphicon glyphicon-log-in"></i></button>
+								<button type="submit" class="btn btn-primary" form="register_form">Register <i class="glyphicon glyphicon-log-in"></i></button>
 								<button type="reset" class="btn btn-danger" form="register_form">Reset <i class="glyphicon glyphicon-erase"></i></button>
 							</div>
 						</div>
