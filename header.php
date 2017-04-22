@@ -55,11 +55,11 @@
 				<?php @session_start(); ?>
 				<li><a href="basket.php"><span class="glyphicon glyphicon-shopping-cart"></span> Basket <span class="badge"><?=@count($_SESSION['cars'])?></span></a></li>
 				<?php if (!empty($_SESSION['user']['email'])): ?>
-				<li><a href="#"><span class="glyphicon glyphicon-user"></span> <?=$_SESSION['user']['name']?></a></li>
-				<li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+					<li><a href="#"><span class="glyphicon glyphicon-user"></span> My Account</a></li>
+					<li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 				<?php else: ?>
-				<li><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-				<li><a href="register.php"><span class="glyphicon glyphicon-user"></span> Regisiter</a></li>
+					<li><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+					<li><a href="register.php"><span class="glyphicon glyphicon-user"></span> Regisiter</a></li>
 				<?php endif; ?>
 			</ul>
 		</div>
