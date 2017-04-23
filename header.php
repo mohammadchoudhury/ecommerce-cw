@@ -55,7 +55,15 @@
 				<?php @session_start(); ?>
 				<li><a href="basket.php"><span class="glyphicon glyphicon-shopping-cart"></span> Basket <span class="badge"><?=@count($_SESSION['cars'])?></span></a></li>
 				<?php if (!empty($_SESSION['user']['email'])): ?>
-					<li><a href="#"><span class="glyphicon glyphicon-user"></span> My Account</a></li>
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <?=$_SESSION['user']['name']?> <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="cars_ajax.php">My Account</a></li>
+							<li><a href="cars_ajax.php">Order History</a></li>
+							<li><a href="cars_ajax.php">Addresses</a></li>
+							<li><a href="cars_ajax.php">Payment Methods</a></li>
+						</ul>
+					</li>
 					<li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 				<?php else: ?>
 					<li><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
