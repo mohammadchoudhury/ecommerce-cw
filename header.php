@@ -58,10 +58,10 @@
 					<li class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <?=$_SESSION['user']['name']?> <span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href="cars_ajax.php">My Account</a></li>
-							<li><a href="cars_ajax.php">Order History</a></li>
-							<li><a href="cars_ajax.php">Addresses</a></li>
-							<li><a href="cars_ajax.php">Payment Methods</a></li>
+							<li><a href="my_account.php">My Account</a></li>
+							<li><a href="order_history.php">Order History</a></li>
+							<li><a href="addresses.php">Addresses</a></li>
+							<li><a href="payment_methods.php">Payment Methods</a></li>
 						</ul>
 					</li>
 					<li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
