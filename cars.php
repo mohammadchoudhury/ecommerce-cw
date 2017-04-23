@@ -9,7 +9,10 @@
 	<link rel="stylesheet" type="text/css" href="css/style.css">	
 </head>
 <body>
-	<?php include 'header.php'; ?>
+	<?php
+		include 'header.php';
+		include_once 'config.inc.php';
+	?>
 	
 	<div id="banner">
 		<div class="container-fluid">
@@ -40,7 +43,7 @@
 							<div class="panel-body">
 								<form action="" method="get">
 									<label for="">Name of car</label>
-									<input type="text" name="" class="form-control" placeholder="Enter name of car"><br>
+									<input type="text" name="name" class="form-control" placeholder="Enter name of car" onkeyup="getCars();" value="<?=(isset($_GET['name'])?$_GET['name']:'')?>"><br>
 									<button type="submit" class="btn btn-primary form-control">Search</button>
 								</form>
 							</div>
@@ -53,36 +56,50 @@
 								<form action="" method="get">
 
 									<div class="form-group">
-										<label for="">Make</label>
-										<select class="form-control">
-											<option selected value="">--- Choose a Make ---</option>
-											<option>Test</option>
-											<option>Test</option>
-										</select><br>
-										<label for="">Model</label>
-										<select class="form-control">
-											<option selected value="">--- Choose a Model ---</option>
-											<option>Test</option>
-											<option>Test</option>
+										<label>Make</label>
+										<select class="form-control" name="make" onchange="getCars();">
+											<option value="">--- Choose a Make ---</option>
+											<?php
+											$sql = "SELECT * FROM tbl_make";
+											$stmt = $mysqli->prepare($sql);
+											$stmt->execute();
+											$result = $stmt->get_result();
+											$num_rows = $result->num_rows;
+											while ($make = $result->fetch_assoc()) {
+												echo "<option value='$make[make_id]'>$make[make_name]</option>";
+											}
+											?>
 										</select><br>
 										<label>Min Price</label>
-										<select class="form-control">
-											<option selected value="">--- Choose a min price ---</option>
-											<option>£0</option>
-											<option>£10000</option>
-											<option>£30000</option>
-											<option>£50000</option>
+										<select class="form-control" name="minprice" onchange="updateMax();getCars();">
+											<option value="">--- Choose a min price ---</option>
+											<option value="0">£0</option>
+											<option value="20000">£20000</option>
+											<option value="50000">£50000</option>
+											<option value="100000">£100000</option>
+											<option value="200000">£200000</option>
+											<option value="500000">£500000</option>
+											<option value="750000">£750000</option>
+											<option value="1000000">£1000000</option>
+											<option value="1500000">£1500000</option>
+											<option value="2000000">£2000000</option>
 										</select><br>
 										<label>Max Price</label>
-										<select class="form-control">
-											<option selected value="">--- Choose a max price ---</option>
-											<option>£0</option>
-											<option>£10000</option>
-											<option>£30000</option>
-											<option>£50000</option>
-										</select><br>
+										<select class="form-control" name="maxprice" onchange="getCars();">
+											<option value="">--- Choose a max price ---</option>
+											<option value="20000">£20000</option>
+											<option value="50000">£50000</option>
+											<option value="100000">£100000</option>
+											<option value="200000">£200000</option>
+											<option value="500000">£500000</option>
+											<option value="750000">£750000</option>
+											<option value="1000000">£1000000</option>
+											<option value="1500000">£1500000</option>
+											<option value="2000000">£2000000</option>
+										</select>
 									</div>
-									<button type="submit" class="btn btn-primary form-control">Filter</button>
+									<button type="submit" class="btn btn-primary form-control">Filter</button><br><br>
+									<button type="reset" class="btn btn-danger form-control" onclick="getCars();">Reset</button>
 								</form>
 							</div>
 						</div>
@@ -118,6 +135,7 @@
 					.car-listing a.btn {
 						font-weight: bold;
 						padding: 10px;
+						margin-bottom: 15px;
 					}
 					.car-listing ul {
 						list-style: none;
@@ -135,90 +153,23 @@
 					<div class="panel panel-default">
 						<div class="panel-heading clearfix">
 							<div class="pull-left">
-								<h4>1 - 10 of 50 Listings</h4>
+								<h4>1 - 17 of 17 Listings</h4>
 							</div>
 							<div class="pull-right">
 								<p>Sort by:</p>
-								<form action="#" method="post">
-									<select name="sortby" class="form-control">
-										<option>Price (low to high)</option>
-										<option>Price (high to low)</option>
+								<form action="#" method="get">
+									<select name="sortby" class="form-control" onchange="getCars();">
+										<option value="1">Name (Ascending)</option>
+										<option value="2">Name (Descending)</option>
+										<option value="3">Price (low to high)</option>
+										<option value="4">Price (high to low)</option>
 									</select>
 								</form>
-								<a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-th-large"></span></a>
-								<a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-th-list"></span></a>
+								<a class="btn btn-primary" onclick="getCars('off')"><span class="glyphicon glyphicon-th-list"></span></a>
+								<a class="btn btn-primary" onclick="getCars('on')"><span class="glyphicon glyphicon-th-large"></span></a>
 							</div>
 						</div>
-						<div class="panel-body">
-							<div class="car-listing gray-bg">
-								<div class="col-md-4 img">
-									<img src="https://is2-ssl.mzstatic.com/image/thumb/Purple111/v4/b1/bd/b0/b1bdb0f4-820f-8820-f48a-d95aa3b06f2d/source/256x256bb.jpg" class="img-responsive" width="100%">
-								</div>
-								<div class="col-md-8 car-details">
-									<h3>BMW 3 Series</h3>
-									<p>£13500</p>
-									<ul>
-										<li>Diesel</li>
-										<li>Manual</li>
-										<li>5 Seats</li>
-										<li>Air Conditioning</li>
-										<li>Spare Tyre</li>
-										<li>Finance Available</li>
-									</ul>
-									<a class="btn btn-primary" href="#">View Details <span class="glyphicon glyphicon-circle-arrow-right"></span></a>
-									<a class="btn btn-success" href="#">Add to basket <span class="glyphicon glyphicon-shopping-cart"></span></a>
-								</div>
-							</div>
-							<div class="car-listing gray-bg">
-								<div class="col-md-4 img">
-									<img src="https://is2-ssl.mzstatic.com/image/thumb/Purple111/v4/b1/bd/b0/b1bdb0f4-820f-8820-f48a-d95aa3b06f2d/source/256x256bb.jpg" class="img-responsive" width="100%">
-								</div>
-								<div class="col-md-8 car-details">
-									<h3>BMW 3 Series</h3>
-									<p>£13500</p>
-									<ul>
-										<li>Diesel</li>
-										<li>Manual</li>
-										<li>5 Seats</li>
-										<li>Air Conditioning</li>
-										<li>Spare Tyre</li>
-										<li>Finance Available</li>
-									</ul>
-									<a class="btn btn-primary" href="#">View Details <span class="glyphicon glyphicon-circle-arrow-right"></span></a>
-									<a class="btn btn-success" href="#">Add to basket <span class="glyphicon glyphicon-shopping-cart"></span></a>
-								</div>
-							</div>
-							<div class="car-listing gray-bg">
-								<div class="col-md-4 img">
-									<img src="https://is2-ssl.mzstatic.com/image/thumb/Purple111/v4/b1/bd/b0/b1bdb0f4-820f-8820-f48a-d95aa3b06f2d/source/256x256bb.jpg" class="img-responsive" width="100%">
-								</div>
-								<div class="col-md-8 car-details">
-									<h3>BMW 3 Series</h3>
-									<p>£13500</p>
-									<ul>
-										<li>Diesel</li>
-										<li>Manual</li>
-										<li>5 Seats</li>
-										<li>Air Conditioning</li>
-										<li>Spare Tyre</li>
-										<li>Finance Available</li>
-									</ul>
-									<a class="btn btn-primary" href="#">View Details <span class="glyphicon glyphicon-circle-arrow-right"></span></a>
-									<a class="btn btn-success" href="#">Add to basket <span class="glyphicon glyphicon-shopping-cart"></span></a>
-								</div>
-							</div>
-						</div>
-						<div class="panel-footer text-center">
-							<ul class="pagination">
-								<li><a href="#">&laquo;</a></li>
-								<li><a href="#">1</a></li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li><a href="#">4</a></li>
-								<li><a href="#">5</a></li>
-								<li><a href="#">&raquo;</a></li>
-							</ul>
-						</div>
+						<div id="ajax"></div>
 					</div>
 				</div>
 			</div>
@@ -227,8 +178,59 @@
 
 	<?php include 'footer.php'; ?>
 
-	<script src="js//jquery.js"></script>
+	<script src="js/jquery.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+	<script src="js/script.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {getCars('off');});
+		$("[name=make]").val(<?=(isset($_GET['make'])?$_GET['make']:'')?>);
+		$("[name=model]").val(<?=(isset($_GET['model'])?$_GET['model']:'')?>);
+		$("[name=minprice]").val(<?=(isset($_GET['minprice'])?$_GET['minprice']:'')?>);
+		$("[name=maxprice]").val(<?=(isset($_GET['maxprice'])?$_GET['maxprice']:'')?>);
+
+		function getCars(grid, result) {
+			$.ajax({
+				url: "ajax/cars.php",
+				success: function(result){
+					$("#ajax").html(result);
+				},
+				type: 'GET',
+				data: 
+				'&make=' + document.getElementsByName('make')[0].value
+				+ '&minprice=' + document.getElementsByName('minprice')[0].value
+				+ '&maxprice=' + document.getElementsByName('maxprice')[0].value
+				+ '&name=' + document.getElementsByName('name')[0].value
+				+ '&sortby=' + document.getElementsByName('sortby')[0].value
+				+ '&grid=' + grid
+				});
+		}
+
+		function updateBasket(action, id, result) {
+			$.ajax({
+				url: "ajax/basket.php",
+				success: function(result){
+					$(".nav li span.badge").html(result);
+				},
+				type: 'POST',
+				data: action + "=" + id
+			});
+		}
+
+		var prices = [0, 20000, 50000, 100000, 200000, 500000, 750000, 1000000, 1500000, 2000000];
+		function updateMax() {
+			var elm = document.getElementsByName('maxprice')[0];
+			var min = document.getElementsByName('minprice')[0].value;
+			while (elm.options.length > 1) {
+				elm.options.remove(1);
+			}
+			for (i in prices) {
+				elm.options.add(new Option('£'+prices[i], prices[i]));
+			}
+			while (elm.options[1].value < min) {
+				elm.options[1].remove();
+			}
+		}
+	</script>
 
 </body>
 </html>

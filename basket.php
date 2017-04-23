@@ -91,7 +91,7 @@
 							</div>
 							<div class="panel-footer clearfix">
 								<div class="pull-left">
-									<a href="cars_ajax.php" class="btn btn-danger"><i class="glyphicon glyphicon-arrow-left"></i> Continue shopping</a>
+									<a href="cars.php" class="btn btn-danger"><i class="glyphicon glyphicon-arrow-left"></i> Continue shopping</a>
 								</div>
 								<div class="pull-right">
 								<?php 

@@ -32,7 +32,7 @@
 				<li class="dropdown">
 					<a class="dropdown-toggle" data-toggle="dropdown">Cars <span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="cars_ajax.php">All</a></li>
+						<li><a href="cars.php">All</a></li>
 						<hr>
 						<?php
 						include_once 'config.inc.php';
@@ -42,7 +42,7 @@
 						$result = $stmt->get_result();
 						$num_rows = $result->num_rows;
 						while ($make = $result->fetch_assoc()) {
-							echo "<li><a href='cars_ajax.php?make=$make[make_id]'>$make[make_name]</a></li>";
+							echo "<li><a href='cars.php?make=$make[make_id]'>$make[make_name]</a></li>";
 						}
 						?>
 					</ul>
