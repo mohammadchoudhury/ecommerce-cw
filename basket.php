@@ -67,7 +67,7 @@
 											$row = $result->fetch_assoc();
 										?>
 										<tr>
-											<td class="text-center"><a href="#"><img class="img-thumbnail" src="<?=$row['image_url']?>"></a></td>
+											<td class="text-center"><a href="car_details.php?id=<?=$row['car_id']?>"><img class="img-thumbnail" src="<?=$row['image_url']?>"></a></td>
 											<td><a href="car_details.php?id=<?=$row['car_id']?>"><?=$row['make_name'] . " " .$row['model']?></a></td>
 											<td><input class="form-control" type="number" min="1" max="9" maxlength="1" value="<?=$quantity?>" name="quantity<?=$row['car_id']?>" onchange='updateBasket("upd", <?=$row['car_id']?>);'></td>
 											<td>&pound;<?=$row['price']?></td>
