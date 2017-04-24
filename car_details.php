@@ -21,7 +21,7 @@
 					<ul class="breadcrumb">
 						<li><a href="index.php">Home</a>
 						</li>
-						<li>Cars</li>
+						<li><a href="cars.php">Cars</a></li>
 					</ul>
 				</div>
 			</div>
@@ -45,7 +45,6 @@
 		<div class="container">
 			<div class="col-md-9" id="car_details">
 				<div class="panel panel-default">
-
 					<?php
 					include_once 'config.inc.php';
 					include_once 'functions.php';
@@ -86,7 +85,7 @@
 									<?php
 									$i = 1;
 									while ($row2 = $result->fetch_assoc()) {
-										echo ($i==1 ? "<div class='item active'><img src='img/bmw/3-series-1.jpg'></div>" : "<div class='item'><img src='img/bmw/3-series-$i.jpg'></div>");
+										echo ($i==1 ? "<div class='item active'><img src='$row2[image_url]'></div>" : "<div class='item'><img src='$row2[image_url]'></div>");
 										$i++;
 									}
 									?>
@@ -103,10 +102,10 @@
 								</div>
 								<br>
 								<ul class="nav nav-pills nav-justified">
-									<li role="presentation" class="active"><a href="#overview" data-toggle="tab">Car Overview</a></li>
-									<li role="presentation"><a href="#specification" data-toggle="tab">Specification</a></li>
-									<li role="presentation"><a href="#extras" data-toggle="tab">Extras</a></li>
-									<li role="presentation"><a href="#reviews" data-toggle="tab">Reviews</a></li>
+									<li class="active"><a href="#overview" data-toggle="tab">Car Overview</a></li>
+									<li><a href="#specification" data-toggle="tab">Specification</a></li>
+									<li><a href="#extras" data-toggle="tab">Extras</a></li>
+									<li><a href="#reviews" data-toggle="tab">Reviews</a></li>
 								</ul>
 								<div class="tab-content" style="padding: 15px">
 									<div id="overview" class="tab-pane fade in active">
@@ -393,9 +392,6 @@
 			array_push($msg, array("An error has occurred on our end<br>Please try again later", 0));
 		}
 		?>
-
-				<!-- <div class="panel-footer text-center">
-			</div> -->
 		</div>
 	</div>
 </div>
