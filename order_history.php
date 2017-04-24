@@ -15,13 +15,13 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-md-7">
-					<h1>My Account</h1>
+					<h1>Order History</h1>
 				</div>
 				<div class="col-md-5">
 					<ul class="breadcrumb">
 						<li><a href="index.php">Home</a>
 						</li>
-						<li>My Account</li>
+						<li>Order History</li>
 					</ul>
 				</div>
 			</div>
