@@ -63,7 +63,7 @@
 								<h3><b><?=$row['make_name']." ".$row['model']?></b> - &pound;<?=$row['price']?></span></h3>
 							</div>
 							<div class="panel-body">
-							<?php
+								<?php
 								$sql = "SELECT * FROM tbl_image WHERE car_id = ?";
 								$stmt = $mysqli->prepare($sql);
 								if ($stmt){
@@ -72,23 +72,23 @@
 									$result = $stmt->get_result();
 									$num_rows = $result->num_rows;
 								}
-							?>
+								?>
 								<div id="myCarousel" class="carousel slide" data-ride="carousel">
 									<ol class="carousel-indicators">
-									<?php
+										<?php
 										for ($i=0; $i < $num_rows; $i++) { 
 											echo ($i==0 ? "<li data-target='#myCarousel' data-slide-to='0' class='active'></li>" : "<li data-target='#myCarousel' data-slide-to='$i'></li>");
 										}
-									?>
+										?>
 									</ol>
 									<div class="carousel-inner">
-									<?php
-									$i = 1;
-									while ($row2 = $result->fetch_assoc()) {
-										echo ($i==1 ? "<div class='item active'><img src='$row2[image_url]'></div>" : "<div class='item'><img src='$row2[image_url]'></div>");
-										$i++;
-									}
-									?>
+										<?php
+										$i = 1;
+										while ($row2 = $result->fetch_assoc()) {
+											echo ($i==1 ? "<div class='item active'><img src='$row2[image_url]'></div>" : "<div class='item'><img src='$row2[image_url]'></div>");
+											$i++;
+										}
+										?>
 									</div>
 									<!-- Left and right controls -->
 									<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
@@ -353,12 +353,34 @@
 								<div class="panel-body">
 									<form action="" method="get">
 										<div class="form-group">
-											<label>Quantity</label>
-											<input type="number" name="quantity" class="form-control" min="1" max="9" placeholder="Enter quantity" value="1" required><br>
+											<label>Stock</label>
+											<?php if (!$row['stock']): ?>
+												<div>Out of Stock</div>
+											<?php elseif ($row['stock']<10): ?>
+												<div><?=$row['stock']?> available</div>
+											<?php else: ?>
+												<div>10+ available</div>
+											<?php endif ?>
+										</div>
+										<div class="form-group">
 											<label>Price</label>
 											<div id="price">&pound;<?=$row['price']?></div>
 										</div>
-										<button type="button" class="btn btn-primary form-control" onclick="updateBasket('add', <?=$row['car_id']?>);">Add to basket</button>
+										<?php if (!$row['stock']): ?>
+											<button type="button" class="btn btn-danger form-control disabled" onclick="alert('Sorry. This vehicle is out of stock')">Out of Stock</button>
+										<?php else: ?>
+											<div class="form-group">
+												<label>Quantity</label>
+												<input type="number" name="quantity" class="form-control" min="1" max="<?=($row['stock']<9)?$row['stock']:9?>" placeholder="Enter quantity" value="1" required>
+											</div>
+											<?php if (isset($_SESSION['cars'][$row['car_id']])): ?>
+												<button type="button" id="add_btn" class='btn btn-success pull-right form-control' onclick='updateBasket("add", <?=$row['car_id']?>)' style="display: none">Add to basket <span class='glyphicon glyphicon-shopping-cart'></span></button>
+												<button type="button" id="del_btn" class='btn btn-danger pull-right form-control' onclick='updateBasket("del", <?=$row['car_id']?>)'>Remove from basket <span class='glyphicon glyphicon-shopping-cart'></span></button>
+											<?php else: ?>
+												<button type="button" id="del_btn" class='btn btn-danger pull-right form-control' onclick='updateBasket("del", <?=$row['car_id']?>)'  style="display: none">Remove from basket <span class='glyphicon glyphicon-shopping-cart'></span></button>
+												<button type="button" id="add_btn" class='btn btn-success pull-right form-control' onclick='updateBasket("add", <?=$row['car_id']?>)'>Add to basket <span class='glyphicon glyphicon-shopping-cart'></span></button>
+											<?php endif; ?>
+										<?php endif; ?>
 									</form>
 								</div>
 							</div>
@@ -392,8 +414,8 @@
 			array_push($msg, array("An error has occurred on our end<br>Please try again later", 0));
 		}
 		?>
-		</div>
 	</div>
+</div>
 </div>
 </section>
 
@@ -432,6 +454,15 @@
 			data: action + "=" + id
 			+ "&quantity=" + document.getElementsByName("quantity")[0].value
 		});
+		switch(action) {
+			case "add":
+			$("#add_btn").toggle();
+			$("#del_btn").toggle();
+			break;
+			case "del":
+			$("#add_btn").toggle();
+			$("#del_btn").toggle();
+		}
 	}
 
 </script>

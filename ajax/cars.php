@@ -59,10 +59,12 @@ $result = $mysqli->query($sql);
 						<li><?=$row['fuel_type']?></li>
 					</ul>
 					<a class="btn btn-primary pull-left" href="car_details.php?id=<?=$row['car_id']?>">View Details <span class="glyphicon glyphicon-circle-arrow-right"></span></a>
-					<?php if (isset($_SESSION['cars'][$row['car_id']])): ?>
-						<a class='btn btn-danger pull-right' onclick='updateBasket("del", <?=$row['car_id']?>);getCars();'>Remove from basket <span class='glyphicon glyphicon-shopping-cart'></span></a>
+					<?php if (!$row['stock']): ?>
+						<button type="button" class='btn btn-danger pull-right disabled' onclick="alert('Sorry. This vehicle is out of stock')">Out of Stock</span></button>
+					<?php elseif (isset($_SESSION['cars'][$row['car_id']])): ?>
+						<button type="button" class='btn btn-danger pull-right' onclick='updateBasket("del", <?=$row['car_id']?>);getCars();'>Remove from basket <span class='glyphicon glyphicon-shopping-cart'></span></button>
 					<?php else: ?>
-						<a class='btn btn-success pull-right' onclick='updateBasket("add", <?=$row['car_id']?>);getCars();'>Add to basket <span class='glyphicon glyphicon-shopping-cart'></span></a>
+						<button type="button" class='btn btn-success pull-right' onclick='updateBasket("add", <?=$row['car_id']?>);getCars();'>Add to basket <span class='glyphicon glyphicon-shopping-cart'></span></button>
 					<?php endif; ?>
 				</div>
 			</div>
@@ -74,7 +76,7 @@ $result = $mysqli->query($sql);
 	<?php
 	else:
 		while ($row = $result->fetch_assoc()):
-		?>
+			?>
 		<div class="car-listing gray-bg">
 			<div class="col-md-4 img">
 				<img src="<?=$row['image_url']?>" class="img-responsive" width="100%">
@@ -91,10 +93,12 @@ $result = $mysqli->query($sql);
 					<li><?=$row['fuel_type']?></li>
 				</ul>
 				<a class="btn btn-primary pull-left" href="car_details.php?id=<?=$row['car_id']?>">View Details <span class="glyphicon glyphicon-circle-arrow-right"></span></a>
-				<?php if (isset($_SESSION['cars'][$row['car_id']])): ?>
-				<a class='btn btn-danger pull-right' onclick='updateBasket("del", <?=$row['car_id']?>);getCars();'>Remove from basket <span class='glyphicon glyphicon-shopping-cart'></span></a>
+				<?php if (!$row['stock']): ?>
+					<button type="button" class='btn btn-danger pull-right disabled' onclick="alert('Sorry. This vehicle is out of stock')">Out of Stock</span></button>
+				<?php elseif (isset($_SESSION['cars'][$row['car_id']])): ?>
+					<button type="button" class='btn btn-danger pull-right' onclick='updateBasket("del", <?=$row['car_id']?>);getCars();'>Remove from basket <span class='glyphicon glyphicon-shopping-cart'></span></button>
 				<?php else: ?>
-				<a class='btn btn-success pull-right' onclick='updateBasket("add", <?=$row['car_id']?>);getCars();'>Add to basket <span class='glyphicon glyphicon-shopping-cart'></span></a>
+					<button type="button" class='btn btn-success pull-right' onclick='updateBasket("add", <?=$row['car_id']?>);getCars();'>Add to basket <span class='glyphicon glyphicon-shopping-cart'></span></button>
 				<?php endif; ?>
 			</div>
 		</div>

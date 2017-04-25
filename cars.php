@@ -132,7 +132,7 @@
 					.car-details {
 						padding: 15px;
 					}
-					.car-listing a.btn {
+					.car-listing .btn {
 						font-weight: bold;
 						padding: 10px;
 						margin-bottom: 15px;
