@@ -1,28 +1,69 @@
 <?php
-include_once 'config.inc.php';
-include_once 'functions.php';
 session_start();
+if (!isset($_SESSION['user'])):
+	header('Location: login.php');
+endif;
+
+include 'config.inc.php';
+include 'functions.php';
+
+if (isset($_POST) && !empty($_POST) && isset($_POST['option'])) {
+	$_SESSION['checkout']['address'] = $_POST['option'];
+	header('Location: checkout_payment.php');
+}
+
 $msg = [];
-if (isset($_POST) && !empty($_POST)) {
-	$c_id = $_SESSION['user']['c_id'];
+$name = '';
+$address = '';
+$town = '';
+$city = '';
+$postcode = '';
+if (isset($_POST) && !empty($_POST) && $_POST['submit']=="address") {
+	$name = $_POST['name'];
 	$address = $_POST['address'];
 	$town = $_POST['town'];
 	$city = $_POST['city'];
 	$postcode = $_POST['postcode'];
-	$sql = "INSERT INTO tbl_address(customer_id, address, town, city, postcode) value (?, ?, ?, ?, ?)";
-	$stmt = $mysqli->prepare($sql);
-	if ($stmt){
-		$stmt->bind_param("issss",$c_id, $address, $town, $city, $postcode);
+	if (!$name || !$address || !$town || !$city || !$postcode) {
+		array_push($msg, array("Please fill in all fields", 0));
+	}
+	$name_regex = "/^[a-z]+(-)?[a-z]*$/i";
+	if ($name && !preg_match($name_regex, $name)) {
+		array_push($msg, array("Name must not have special characters", 0));
+	}
+	$address_regex = "/^[0-9a-z ]+$/i";
+	if ($address && !preg_match($address_regex, $address)) {
+		array_push($msg, array("Address must not have special characters", 0));
+	}
+	$regex = "/^[a-z ]+$/i";
+	if ($town && !preg_match($regex, $town)) {
+		array_push($msg, array("Town must not have special characters", 0));
+	}
+	if ($city && !preg_match($regex, $city)) {
+		array_push($msg, array("City must not have special characters", 0));
+	}
+	$postcode_regex = "/^[A-Z]{1,2}[0-9R][0-9A-Z]? [0-9][ABD-HJLNP-UW-Z]{2}$/i";
+	if ($postcode && !preg_match($postcode_regex, $postcode)) {
+		array_push($msg, array("Enter a valid postcode", 0));
+	}
+	if (!count($msg)) {
+		$sql = "INSERT INTO tbl_address(customer_id, name, address, town, city, postcode) value (?, ?, ?, ?, ?, ?)";
+		$stmt = $mysqli->prepare($sql);
+		$stmt->bind_param("isssss", $_SESSION['user']['c_id'], $name, $address, $town, $city, $postcode);
 		if ($stmt->execute()) {
-			$_SESSION['checkout']['address'] = $mysqli->insert_id;
-			header('Location: checkout_payment.php');
+			array_push($msg, array("Address successfully added", 1));
 		} else {
 			array_push($msg, array("An error has occurred on our end<br>Please try again later", 0));
 		}
-	} else {
-		array_push($msg, array("An error has occurred on our end<br>Please try again later", 0));
+		$stmt->close();
+		$name = '';
+		$address = '';
+		$town = '';
+		$city = '';
+		$postcode = '';
 	}
 }
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -58,7 +99,6 @@ if (isset($_POST) && !empty($_POST)) {
 		<div class="container">
 			<div class="row">
 				<div class="col-md-9" id="checkout">
-					<!-- <form action="" method="get"> -->
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<ul class="nav nav-pills nav-justified">
@@ -67,11 +107,11 @@ if (isset($_POST) && !empty($_POST)) {
 										<i class="glyphicon glyphicon-map-marker"></i> Address
 									</a>
 								</li>
-								<!-- <li class="disabled">
+								<li class="disabled">
 									<a href="#delivery-method" data-toggle="tab" disabled>
 										<i class="glyphicon glyphicon-road"></i> Delivery Method
 									</a>
-								</li> -->
+								</li>
 								<li class="disabled">
 									<a href="#payment" data-toggle="tab">
 										<i class="glyphicon glyphicon-credit-card"></i> Payment
@@ -119,38 +159,99 @@ if (isset($_POST) && !empty($_POST)) {
 							#checkout li.disabled a {
 								pointer-events: none;
 							}
+							#checkout #addressForm {
+								margin-top: 20px;
+							}
 						</style>
-						<div class="panel-body">
-							
-							<div><?=generateMessages($msg)?></div>
-							<div class="row">
-								<div class="col-xs-12">
-									<div class="tab-content">
-										<div class="panel-body tab-pane fade in active" id="address">
-											<div class="col-md-6 col-md-push-3">
-												<form id="form" action="" method="POST">
-													<input type="text" class="form-control" name="address" placeholder="Address" required=""><br>
-													<input type="text" class="form-control" name="town" placeholder="Town" required=""><br>
-													<input type="text" class="form-control" name="city" placeholder="City" required=""><br>
-													<input type="text" class="form-control" name="postcode" placeholder="Postcode" required=""><br>
-												</form>
+						<div class="row">
+							<div class="col-xs-12">
+								<?php
+								$sql = "SELECT * FROM tbl_address WHERE customer_id = ?";
+								$stmt = $mysqli->prepare($sql);
+								$stmt->bind_param("i", $_SESSION['user']['c_id']);
+								$stmt->execute();
+								$result = $stmt->get_result();
+								$stmt->close();
+								?>
 
+								<div class="panel-body tab-pane fade in active" id="address">
+									<form id="addressOption" method="post">
+										<?php while($row = $result->fetch_assoc()): ?>
+											<div class="col-sm-6">
+												<div class="btn btn-primary" data-toggle="buttons">
+													<h3><?=$row['name']?></h3>
+													<p><?=$row['address'] .", ". $row['town'] .", ". $row['city'] .", ". $row['postcode']?></p>
+													<input type="radio" name="option" value="<?=$row['address_id']?>" onchange="selected(this);" required>
+												</div>
 											</div>
+										<?php endwhile; ?>
+									</form>
+									<div class="col-sm-6">
+										<div class="btn btn-primary" data-toggle="buttons">
+											<h3>Other</h3>
+											<p>Add a new address</p>
+											<input type="radio" name="option" value="other" onchange="selected(this);">
+										</div>
+									</div>
+									<div class="row">
+										<div id="addressForm" class="col-md-6 col-md-offset-3 well" style="display: none;">
+											<form method="post">
+												<div id="error"><?=generateMessages($msg);?></div>
+												<div class="form-group">
+													<div class="input-group">
+														<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+														<input type="text" class="form-control" name="name" placeholder="Address Name (e.g Home)" value="<?=$name?>">
+													</div>
+												</div>
+												<div class="form-group">
+													<div class="input-group">
+														<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+														<input type="text" class="form-control" name="address" placeholder="Address" value="<?=$address?>">
+													</div>
+												</div>
+												<div class="form-group">
+													<div class="input-group">
+														<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+														<input type="text" class="form-control" name="town" placeholder="Town" value="<?=$town?>">
+													</div>
+												</div>
+												<div class="form-group">
+													<div class="input-group">
+														<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+														<input type="text" class="form-control" name="city" placeholder="City" value="<?=$city?>">
+													</div>
+												</div>
+												<div class="form-group">
+													<div class="input-group">
+														<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+														<input type="text" class="form-control" name="postcode" placeholder="Postcode" value="<?=$postcode?>">
+													</div>
+												</div>
+												<div class="pull-left">
+													<button type="reset" class="btn btn-danger">Reset <i class="glyphicon glyphicon-erase"></i></button>
+												</div>
+												<div class="pull-right">
+													<button type="submit" class="btn btn-primary" name="submit" value="address">Add address <i class="glyphicon glyphicon-plus"></i></button>
+												</div>
+											</form>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 						<div class="panel-footer clearfix">
+							<div class="pull-left">
+								<a href="cars.php" class="btn btn-danger"><i class="glyphicon glyphicon-arrow-left"></i> Continue shopping</a>
+							</div>
 							<div class="pull-right">
-								<button id="nextTab" class="btn btn-primary" type="submit" form="form">Continue <i class="glyphicon glyphicon-arrow-right"></i></button>
+								<button type="submit" form="addressOption" class="btn btn-primary">Select Address <i class="glyphicon glyphicon-arrow-right"></i>
+								</button>
 							</div>
 						</div>
 					</div>
-					<!-- </form> -->
 				</div>
 				<div class="col-md-3">
-					<!-- <div class="panel panel-default" id="order-summary">
+					<div class="panel panel-default" id="order-summary">
 						<div class="panel-heading">
 							<h3 class="text-uppercase">Order summary</h3>
 						</div>
@@ -176,7 +277,7 @@ if (isset($_POST) && !empty($_POST)) {
 								</tbody>
 							</table>
 						</div>
-					</div> -->
+					</div>
 				</div>
 			</div>
 		</div>
@@ -184,49 +285,26 @@ if (isset($_POST) && !empty($_POST)) {
 
 	<?php include 'footer.php'; ?>
 
-	<script src="js/jquery.js"></script>
+	<script src="js//jquery.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script type="text/javascript">
-		selectTab();
-		function getAnchor() {
-			return document.location.toString().split('#')[1];
-		}
-		function selectTab(hash) {
-			if (hash) {
-				$('.nav-pills a[href="' + hash + '"]').tab('show');
-			} else {
-				$('.nav-pills a[href="#' + getAnchor() + '"]').tab('show');
+		$(document).ready(function() {
+			var option = <?=(isset($_SESSION['checkout']['address']))?$_SESSION['checkout']['address']:"'other'";?>;
+			$("[value="+option+"]").prop('checked', true);
+			if (option == "other") {	
+				document.getElementById('addressForm').style.display = 'block';
 			}
-		}
-		$('.nav-pills a').on('shown.bs.tab', function (e) {
-			window.location.hash = e.target.hash;
-			nextTab = document.getElementById("nextTab");
-			console.log(nextTab);
-			console.log(nextTab.nextElementSibling);
-			switch(getAnchor()) {
-				case '':
-				case 'address':
-				nextTab.style.display = 'inline-block';
-				nextTab.nextElementSibling.style.display = "none";
-				nextTab.hash = "delivery-method";
-				break;
-				case 'delivery-method':
-				nextTab.style.display = 'inline-block';
-				nextTab.nextElementSibling.style.display = "none";
-				nextTab.hash = "payment";
-				break;
-				case 'payment':
-				nextTab.style.display = 'inline-block';
-				nextTab.nextElementSibling.style.display = "none";
-				nextTab.hash = "order-review";
-				break;
-				case 'order-review':
-				nextTab.style.display = 'none';
-				nextTab.nextElementSibling.style.display = "inline-block";
-				break;
-				default:
-			}
+
 		});
+		function selected(elm) {
+			if (elm.value == 'other') {
+				document.getElementById('addressForm').style.display = 'block';
+			} else {
+				document.getElementById('addressForm').style.display = 'none';
+			}
+			$("[name=option]").prop('checked', false);
+			$(elm).prop('checked', true);
+		}
 	</script>
 
 </body>
