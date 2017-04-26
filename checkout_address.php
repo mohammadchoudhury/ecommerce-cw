@@ -108,11 +108,6 @@ if (isset($_POST) && !empty($_POST) && $_POST['submit']=="address") {
 									</a>
 								</li>
 								<li class="disabled">
-									<a href="#delivery-method" data-toggle="tab" disabled>
-										<i class="glyphicon glyphicon-road"></i> Delivery Method
-									</a>
-								</li>
-								<li class="disabled">
 									<a href="#payment" data-toggle="tab">
 										<i class="glyphicon glyphicon-credit-card"></i> Payment
 									</a>
