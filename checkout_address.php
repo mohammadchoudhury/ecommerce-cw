@@ -103,17 +103,17 @@ if (isset($_POST) && !empty($_POST) && $_POST['submit']=="address") {
 						<div class="panel-heading">
 							<ul class="nav nav-pills nav-justified">
 								<li class="active">
-									<a href="#address" data-toggle="tab">
+									<a href="checkout_address.php">
 										<i class="glyphicon glyphicon-map-marker"></i> Address
 									</a>
 								</li>
 								<li class="disabled">
-									<a href="#payment" data-toggle="tab">
+									<a href="checkout_payment.php">
 										<i class="glyphicon glyphicon-credit-card"></i> Payment
 									</a>
 								</li>
 								<li class="disabled">
-									<a href="#order-review" data-toggle="tab">
+									<a href="checkout_review.php">
 										<i class="glyphicon glyphicon-shopping-cart"></i> Order Review
 									</a>
 								</li>
