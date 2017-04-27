@@ -28,19 +28,31 @@
 		<div class="col-xs-4 col-sm-3">
 			<h3>Latest Cars</h3>
 			<ul>
-				<li><a href="car_details.php?id=30">BMW 7 Series</a></li>
-				<li><a href="car_details.php?id=27">Pagani Zonda F</a></li>
-				<li><a href="car_details.php?id=26">Mitsubishi Outlander</a></li>
-				<li><a href="car_details.php?id=25">Mercedes-Benz S-Class</a></li>
+				<?php
+				include_once 'config.inc.php';
+				$sql = "SELECT * FROM tbl_car c, tbl_make m WHERE c.make_id = m.make_id ORDER BY car_id DESC LIMIT 5";
+				$stmtf = $mysqli->prepare($sql);
+				$stmtf->execute();
+				$result = $stmtf->get_result();
+				$stmtf->close();
+				while ($latest = $result->fetch_assoc()):?>
+				<li><a href="car_details.php?id=<?=$latest['car_id']?>"><?=$latest['make_name']." ".$latest['model']?></a></li>
+				<?php endwhile; ?>
 			</ul>
 		</div>
 		<div class="col-xs-4 col-sm-3">
 			<h3>Popular Cars</h3>
 			<ul>
-				<li><a href="car_details.php?id=21">Lamborghini Gallardo</a></li>
-				<li><a href="car_details.php?id=18">Ferrari 488 Spider</a></li>
-				<li><a href="car_details.php?id=10">Bently Continental GT</a></li>
-				<li><a href="car_details.php?id=17">Chevrolet Camaro</a></li>
+				<?php
+				include_once 'config.inc.php';
+				$sql = "SELECT c.car_id, make_name, model, SUM(quantity) AS total FROM tbl_car c, tbl_make m, tbl_order_details o WHERE c.make_id = m.make_id AND c.car_id = o.car_id GROUP BY c.car_id ORDER BY total DESC LIMIT 5";
+				$stmtf = $mysqli->prepare($sql);
+				$stmtf->execute();
+				$result = $stmtf->get_result();
+				$stmtf->close();
+				while ($latest = $result->fetch_assoc()):?>
+				<li><a href="car_details.php?id=<?=$latest['car_id']?>"><?=$latest['make_name']." ".$latest['model']?></a></li>
+				<?php endwhile; ?>
 			</ul>
 		</div>
 		<div class="col-sm-3">
