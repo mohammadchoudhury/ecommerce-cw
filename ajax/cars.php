@@ -1,6 +1,8 @@
 <?php
 include_once '../config.inc.php';
 
+$limit = 4;
+
 $sql = "SELECT * FROM tbl_car c, tbl_make m WHERE c.make_id = m.make_id";
 if (!empty($_GET['make'])) {
 	$sql .= " AND m.make_id = ".$mysqli->real_escape_string($_GET['make']);
@@ -30,6 +32,15 @@ if (!empty($_GET['sortby'])) {
 		break;
 	}
 }
+
+$result = $mysqli->query($sql);
+$num_rows = $result->num_rows;
+if (@$_GET['page']) {
+	$sql .= " LIMIT ".$_GET['page']--*$limit.", $limit";
+} else {
+	$sql .= " LIMIT 0, $limit";	
+}
+
 $result = $mysqli->query($sql);
 ?>
 
@@ -110,15 +121,16 @@ $result = $mysqli->query($sql);
 	</div>
 	<div class="panel-footer text-center">
 		<ul class="pagination">
-			<li><a href="#">&laquo;</a></li>
-			<li><a href="#">1</a></li>
-			<li><a href="#">2</a></li>
-			<li><a href="#">3</a></li>
-			<li><a href="#">4</a></li>
-			<li><a href="#">5</a></li>
-			<li><a href="#">&raquo;</a></li>
+			<?php
+			$num_page = ceil($num_rows/$limit); 
+			for ($i=1; $i < $num_page; $i++): ?>
+			<li <?=($i-1==$_GET['page'])?"class='active'":"";?>><a onclick="getCars(g,<?=$i?>)"><?=$i?></a></li>				
+			<?php endfor?>
 		</ul>
 	</div>
+	<script type="text/javascript">
+		$("#total_listings").html("<?=$num_rows?> listing(s) found");
+	</script>
 
 
 

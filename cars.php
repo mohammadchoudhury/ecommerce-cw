@@ -10,8 +10,8 @@
 </head>
 <body>
 	<?php
-		include 'header.php';
-		include_once 'config.inc.php';
+	include 'header.php';
+	include_once 'config.inc.php';
 	?>
 	
 	<div id="banner">
@@ -153,7 +153,7 @@
 					<div class="panel panel-default">
 						<div class="panel-heading clearfix">
 							<div class="pull-left">
-								<h4>1 - 17 of 17 Listings</h4>
+								<h4 id="total_listings"></h4>
 							</div>
 							<div class="pull-right">
 								<p>Sort by:</p>
@@ -187,8 +187,8 @@
 		$("[name=model]").val(<?=(isset($_GET['model'])?$_GET['model']:'')?>);
 		$("[name=minprice]").val(<?=(isset($_GET['minprice'])?$_GET['minprice']:'')?>);
 		$("[name=maxprice]").val(<?=(isset($_GET['maxprice'])?$_GET['maxprice']:'')?>);
-
-		function getCars(grid, result) {
+		var g = "off";
+		function getCars(grid, page) {
 			$.ajax({
 				url: "ajax/cars.php",
 				success: function(result){
@@ -202,10 +202,12 @@
 				+ '&name=' + document.getElementsByName('name')[0].value
 				+ '&sortby=' + document.getElementsByName('sortby')[0].value
 				+ '&grid=' + grid
-				});
+				+ '&page=' + page
+			});
+			g = (grid == "on")?"on":"off";
 		}
 
-		function updateBasket(action, id, result) {
+		function updateBasket(action, id) {
 			$.ajax({
 				url: "ajax/basket.php",
 				success: function(result){
