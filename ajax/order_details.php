@@ -109,58 +109,69 @@ $row = $result->fetch_assoc();
 					<th>Date of Expiry</th>
 					<td><?=$card_details['month']."/".$card_details['year']?></td>
 				</tr>
-				<?php endif; ?>
-			</table>
-		</div>
-	</div>
-	<br>
-	<div class="table-responsive" id="basket">
-		<table class="table table-bordered">
-			<thead>
-				<tr>
-					<th colspan="2">Product</th>
-					<th>Quantity</th>
-					<th>Unit price</th>
-					<th>Total</th>
-				</tr>
-			</thead>
-			<tbody>
-				<?php
-				$sql = "SELECT * FROM tbl_car c, tbl_make m, tbl_order_details o WHERE c.make_id = m.make_id AND o.car_id = c.car_id AND o.order_id = ?";
-				$stmt = $mysqli->prepare($sql);
-				$stmt->bind_param("i", $row['order_id']);
-				$stmt->execute();
-				$result = $stmt->get_result();
-				while ($order_details = $result->fetch_assoc()):
-				?>
-				<tr>
-					<td class="text-center"><a href="car_details.php?id=<?=$order_details['car_id']?>"><img class="img-thumbnail img-responsive" src="<?=$order_details['image_url']?>" style="height: 50px;"></a></td>
-					<td><a href="car_details.php?id=<?=$order_details['car_id']?>"><?=$order_details['make_name'] . " " .$order_details['model']?></a></td>
-					<td><?=$order_details['quantity']?></td>
-					<td>&pound;<?=$order_details['price']?></td>
-					<td>&pound;<?=$order_details['price']*$order_details['quantity']?></td>
-				</tr>
-				<?php
-				endwhile;
-				?>
-			</tbody>
-			<tfoot>
-				<tr>
-					<th class="text-right" colspan="4">Subtotal</th>
-					<th>&pound;<?=$row['subtotal']?></th>
-				</tr>
-				<tr>
-					<th class="text-right" colspan="4">VAT</th>
-					<th>&pound;<?=$row['subtotal']*0.2?></th>
-				</tr>
-				<tr>
-					<th class="text-right" colspan="4">Total</th>
-					<th>&pound;<?=$row['total']?></th>
-				</tr>
-			</tfoot>
+			<?php endif; ?>
 		</table>
 	</div>
 </div>
+<br>
+<div class="table-responsive" id="basket">
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th colspan="2">Product</th>
+				<th>Quantity</th>
+				<th>Unit price</th>
+				<th>Total</th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php
+			$sql = "SELECT * FROM tbl_car c, tbl_make m, tbl_order_details o WHERE c.make_id = m.make_id AND o.car_id = c.car_id AND o.order_id = ?";
+			$stmt = $mysqli->prepare($sql);
+			$stmt->bind_param("i", $row['order_id']);
+			$stmt->execute();
+			$result = $stmt->get_result();
+			while ($order_details = $result->fetch_assoc()):
+				?>
+			<tr>
+				<td class="text-center"><a href="car_details.php?id=<?=$order_details['car_id']?>"><img class="img-thumbnail img-responsive" src="<?=$order_details['image_url']?>" style="height: 50px;"></a></td>
+				<td><a href="car_details.php?id=<?=$order_details['car_id']?>"><?=$order_details['make_name'] . " " .$order_details['model']?></a></td>
+				<td><?=$order_details['quantity']?></td>
+				<td>&pound;<?=$order_details['price']?></td>
+				<td>&pound;<?=$order_details['price']*$order_details['quantity']?></td>
+			</tr>
+			<?php
+			endwhile;
+			?>
+		</tbody>
+		<tfoot>
+			<tr>
+				<th class="text-right" colspan="4">Subtotal</th>
+				<th>&pound;<?=$row['subtotal']?></th>
+			</tr>
+			<tr>
+				<th class="text-right" colspan="4">VAT</th>
+				<th>&pound;<?=$row['subtotal']*0.2?></th>
+			</tr>
+			<tr>
+				<th class="text-right" colspan="4">Total</th>
+				<th>&pound;<?=$row['total']?></th>
+			</tr>
+		</tfoot>
+	</table>
+</div>
+</div>
 <div class="modal-footer gray-bg">
+	<button type="button" class="btn btn-default" onclick="window.print()"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></button>
 	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 </div>
+<style type="text/css">
+	@media print {
+		body * {
+			visibility: hidden;
+		}
+		#order_modal_content, #order_modal_content * {
+			visibility: visible;
+		}
+	}
+</style>
