@@ -47,7 +47,7 @@ if (isset($_POST) && !empty($_POST) && $_POST['submit']=="payment") {
 	if ($year && !($year >= 17 && $year <= 99)) {
 		array_push($msg, array("Year is invalid", 0));
 	}
-	if ($cvv && !(($card_type == 'AX' && strlen($cvv) == 4)||strlen($cvv) == 3)) {
+	if ($cvv && ($card_type == 'AX' && strlen($cvv) != 4) || ($card_type != 'AX' && strlen($cvv) != 3)) {
 		array_push($msg, array("CVV is invalid", 0));
 	}
 	$name_regex = "/^[a-z]+[a-z ]*[a-z]+$/i";
