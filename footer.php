@@ -46,10 +46,22 @@
 		<div class="col-sm-3">
 			<h3>Join the mailing list</h3>
 			<div class="row">
-				<form>
-					<input type="text" class="form-control" placeholder="Email ">
-					<button class="btn  btn-primary form-control" type="submit">Join mailing list </button>
-				</form>
+				<div id="mail_result"></div>
+				<input type="email" class="form-control" placeholder="Email" id="mail_list">
+				<button class="btn btn-primary form-control" type="button" onclick="joinMailList();">Join mailing list </button>
+				<script type="text/javascript">
+					function joinMailList() {
+						$.ajax({
+							url: "ajax/mail.php",
+							success: function(result){
+								$("#mail_result").html(result);
+							},
+							type: 'POST',
+							data: 'email=' + $('#mail_list').val()
+						});
+						$('#mail_list').val("");
+					}
+				</script>
 			</div>
 		</div>
 	</div>
