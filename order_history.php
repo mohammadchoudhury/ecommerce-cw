@@ -1,3 +1,9 @@
+<?php
+session_start();
+if (!isset($_SESSION['user'])):
+	header('Location: login.php');
+endif;
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,6 +53,22 @@
 			<div class="col-md-9">
 				<div class="panel-group">
 					<div class="panel panel-default">
+						<?php
+						$sql = "SELECT * FROM tbl_order WHERE customer_id = ? ORDER BY order_date DESC";
+						$stmt = $mysqli->prepare($sql);
+						$stmt->bind_param("i", $_SESSION['user']['c_id']);
+						$stmt->execute();
+						$result = $stmt->get_result();
+						$stmt->close();
+
+						if ($result->num_rows == 0):
+							?>
+						<div class="panel-heading">
+							<h3 class="text-uppercase">No previous orders</h3>
+						</div>
+						<?php
+						else:				
+							?>
 						<div class="panel-heading">
 							<h3 class="text-uppercase">Order History</h3>
 						</div>
@@ -62,39 +84,83 @@
 									</tr>
 								</thead>
 								<tbody>
+									<?php
+									while ($row = $result->fetch_assoc()):
+										?>
 									<tr>
-										<td>#1005</td>
-										<td>20/04/2017</td>
-										<td>&pound;252000</td>
-										<td><span class="label label-danger">REFUNDED</span></td>
-										<td><a href="#" class="btn btn-primary">View</a></td>
+										<td>#<?=$row['order_id']?></td>
+										<td><?=$row['order_date']?></td>
+										<td>&pound;<?=$row['total']?></td>
+										<?php
+										$color = 'primary';
+										switch ($row['status']) {
+											case 'DELIVERED':
+											$color = 'success';
+											break;
+											case 'REFUNDED':
+											$color = 'danger';
+											break;
+										}
+										?>
+										<td><span class="label label-<?=$color?>"><?=$row['status']?></span></td>
+										<td><button type="button" class="btn btn-primary" onclick="getOrderDetails(<?=$row['order_id']?>);" id="view_<?=$row['order_id']?>">View</button></td>
 									</tr>
-									<tr>
-									<td>#1016</td>
-										<td>20/04/2017</td>
-										<td>&pound;252000</td>
-										<td><span class="label label-success">DELIVERED</span></td>
-										<td><a href="#" class="btn btn-primary">View</a></td>
-									</tr>
-									<tr>
-										<td>#1027</td>
-										<td>20/04/2017</td>
-										<td>&pound;252000</td>
-										<td><span class="label label-primary">PAID</span></td>
-										<td><a href="#" class="btn btn-primary">View</a></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
+								<?php endwhile; ?>
+							</tbody>
+						</table>
 					</div>
-				</div>
+				<?php endif;?>
 			</div>
-		</section>
+		</div>
+	</div>
+</section>
 
-		<?php include 'footer.php'; ?>
+<!-- Modal -->
+<div id="order_modal" class="modal fade" style="z-index: 10000">
+	<div class="modal-dialog modal-lg">
 
-		<script src="js/jquery.js"></script>
-		<script src="js/bootstrap.min.js"></script>
+		<!-- Modal content-->
+		<div id="order_modal_content" class="modal-content">
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
 
-	</body>
-	</html>
+<?php include 'footer.php'; ?>
+
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	function getOrderDetails(id) {
+		$.ajax({
+			url: "ajax/order_details.php",
+			success: function(result){
+				$("#order_modal_content").html(result);
+			},
+			type: 'GET',
+			data: "order_id=" + id
+		});
+		$("#order_modal").modal();
+	}
+
+	$(document).ready(function() {
+		console.log();
+		if (getUrlVars()['id'] != undefined) {
+			$("#view_"+getUrlVars()['id']).click();
+		}
+	});
+	function getUrlVars(){
+		var vars = [], hash;
+		var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+		for(var i = 0; i < hashes.length; i++){
+			hash = hashes[i].split('=');
+			vars.push(hash[0]);
+			vars[hash[0]] = hash[1];
+		}
+		return vars;
+	}
+</script>
+</body>
+</html>
