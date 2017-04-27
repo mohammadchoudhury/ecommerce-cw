@@ -22,12 +22,17 @@ if (isset($_POST) && !empty($_POST) && isset($_POST['confirm'])) {
 		$stmt->execute();
 		$stmt->close();
 		$order_id = $mysqli->insert_id;
-		$sql = "INSERT INTO tbl_order_details (order_id, car_id, quantity) VALUES (?, ?, ?)";
-		$stmt = $mysqli->prepare($sql);
+		$sql = "INSERT INTO tbl_order_details (order_id, car_id, quantity) VALUES (?, ?, ?);";
+		$stmt_insert = $mysqli->prepare($sql);
+		$sql = " UPDATE tbl_car SET stock = stock - ? WHERE car_id = ?;";
+		$stmt_update = $mysqli->prepare($sql);
 		foreach ($_SESSION['cars'] as $car_id => $quantity) {
-			$stmt->bind_param("iii", $order_id, $car_id, $quantity);
-			$stmt->execute();
+			$stmt_insert->bind_param("iii", $order_id, $car_id, $quantity);
+			$stmt_insert->execute();
+			$stmt_update->bind_param("ii", $quantity, $car_id);
+			$stmt_update->execute();
 		}
+		unset($_SESSION['cars']);
 		header('Location: order_history.php');
 	} else {
 		unset($_SESSION['cars']);
