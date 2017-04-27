@@ -47,8 +47,8 @@
 						?>
 					</ul>
 				</li>
-				<li><a href="#">Contact Us</a></li>
-				<li><a href="#">About Us</a></li>
+				<li><a href="contact.php">Contact Us</a></li>
+				<li><a href="about.php">About Us</a></li>
 			</ul>
 			<hr class="visible-xs">
 			<ul class="nav navbar-nav navbar-right">
