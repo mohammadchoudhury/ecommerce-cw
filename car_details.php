@@ -289,7 +289,7 @@
 										</table>
 									</div>
 									<div id="reviews" class="tab-pane fade">
-										<div class="row" id="post-review-box">
+										<!-- <div class="row" id="post-review-box">
 											<div class="col-md-12">
 												<form method="POST" action="">
 													<textarea rows="5" id="new-review" class="form-control animated" placeholder="Enter your review here..." name="comment" cols="50"></textarea>
@@ -323,7 +323,7 @@
 												<p><b>John Smith</b> - 5/5</p>
 												<p>This car is sick bruv.</p>
 											</div>
-										</div>
+										</div> -->
 									</div>
 								</div>
 							</div>
@@ -426,7 +426,6 @@
 <script src="js/script.js"></script>
 <script type="text/javascript">
 	function setRating(rating) {
-		console.log(rating);
 		document.getElementById('rating').value = rating;
 		colorStars(rating);
 	}
@@ -463,6 +462,48 @@
 			$("#add_btn").toggle();
 			$("#del_btn").toggle();
 		}
+	}
+
+	$(document).ready(function() {getReview();});
+
+	function getReview() {
+		$.ajax({
+			url: "ajax/review.php",
+			success: function(result){
+				$("#reviews").html(result);
+			},
+			type: 'POST',
+			data: 'car_id=' + <?=$car_id?>
+		});
+	}
+
+	function postReview() {
+		$.ajax({
+			url: "ajax/review.php",
+			success: function(result){
+				$("#reviews").html(result);
+			},
+			type: 'POST',
+			data: 
+				'action=add' + 
+				'&car_id=' + document.forms["review_form"]["car_id"].value +
+				'&rating=' + document.forms["review_form"]["rating"].value +
+				'&review=' + document.forms["review_form"]["comment"].value
+		});
+	}
+
+	function deleteReview(id) {
+		$.ajax({
+			url: "ajax/review.php",
+			success: function(result){
+				$("#reviews").html(result);
+			},
+			type: 'POST',
+			data: 
+				'car_id=' + <?=$car_id?> +
+				'&action=del' +
+				'&review_id=' + id
+		});
 	}
 
 </script>
