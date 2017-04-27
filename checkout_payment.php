@@ -95,8 +95,7 @@ if (isset($_POST) && !empty($_POST) && $_POST['submit']=="payment") {
 				</div>
 				<div class="col-md-5">
 					<ul class="breadcrumb">
-						<li><a href="index.php">Home</a>
-						</li>
+						<li><a href="index.php">Home</a></li>
 						<li>Checkout</li>
 						<li>Payment</li>
 					</ul>
