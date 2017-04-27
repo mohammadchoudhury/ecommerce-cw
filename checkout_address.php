@@ -89,6 +89,7 @@ if (isset($_POST) && !empty($_POST) && $_POST['submit']=="address") {
 						<li><a href="index.php">Home</a>
 						</li>
 						<li>Checkout</li>
+						<li>Address</li>
 					</ul>
 				</div>
 			</div>
@@ -169,7 +170,7 @@ if (isset($_POST) && !empty($_POST) && $_POST['submit']=="address") {
 								$stmt->close();
 								?>
 
-								<div class="panel-body tab-pane fade in active" id="address">
+								<div class="panel-body tab-pane fade in active">
 									<form id="addressOption" method="post">
 										<?php while($row = $result->fetch_assoc()): ?>
 											<div class="col-sm-6">
