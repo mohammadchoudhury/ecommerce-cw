@@ -33,7 +33,7 @@ if (isset($_POST) && !empty($_POST) && isset($_POST['confirm'])) {
 			$stmt_update->execute();
 		}
 		unset($_SESSION['cars']);
-		header('Location: order_history.php');
+		header('Location: order_history.php?id='.$order_id);
 	} else {
 		unset($_SESSION['cars']);
 		header('Location: basket.php');
