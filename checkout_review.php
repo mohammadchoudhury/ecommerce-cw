@@ -1,35 +1,37 @@
 <?php
-include_once 'config.inc.php';
-include_once 'functions.php';
 session_start();
-$msg = [];
-if (isset($_POST) && !empty($_POST)) {
-	$c_id = $_SESSION['user']['c_id'];
-	$type = $_POST['type'];
-	$card_number = $_POST['card_number'];
-	$month = $_POST['month'];
-	$year = $_POST['year'];
-	$cvv = $_POST['cvv'];
-	$holder_name = $_POST['holder_name'];
+if (!isset($_SESSION['user'])):
+	header('Location: login.php');
+endif;
 
-	if (!validCard($card_number)) {
-		array_push($msg, array("Card number is invalid", 0));
-	}
+include 'config.inc.php';
+include 'functions.php';
 
-	if (!count($msg)) {
-		$sql = "INSERT INTO tbl_payment_card(customer_id, type_code, card_number, month, year, cvv, holder_name) value (?, ?, ?, ?, ?, ?, ?)";
-		$stmt = $mysqli->prepare($sql);
-		if ($stmt){
-			$stmt->bind_param("issssss",$c_id, $type, $card_number, $month, $year, $cvv, $holder_name);
-			if ($stmt->execute()) {
-				$_SESSION['checkout']['payment'] = $mysqli->insert_id;
-				header('Location: checkout_review.php');
-			} else {
-				array_push($msg, array("An error has occurred on our end<br>Please try again later", 0));
-			}
+if (isset($_POST) && !empty($_POST) && isset($_POST['confirm'])) {
+	$confirm = $_POST['confirm'];
+	if ($confirm == "yes") {
+		if ($_SESSION['checkout']['payment'] == "paypal") {
+			$sql = "INSERT INTO tbl_order (customer_id, address_id, subtotal, total) VALUES (?, ?, ?, ?)";
+			$stmt = $mysqli->prepare($sql);
+			$stmt->bind_param("iidd", $_SESSION['user']['c_id'], $_SESSION['checkout']['address'], $_POST['subtotal'], $_POST['total']);
 		} else {
-			array_push($msg, array("An error has occurred on our end<br>Please try again later", 0));
+			$sql = "INSERT INTO tbl_order (customer_id, address_id, card_id, subtotal, total) VALUES (?, ?, ?, ?, ?)";
+			$stmt = $mysqli->prepare($sql);
+			$stmt->bind_param("iiidd", $_SESSION['user']['c_id'], $_SESSION['checkout']['address'],  $_SESSION['checkout']['payment'], $_POST['subtotal'], $_POST['total']);
 		}
+		$stmt->execute();
+		$stmt->close();
+		$order_id = $mysqli->insert_id;
+		$sql = "INSERT INTO tbl_order_details (order_id, car_id, quantity) VALUES (?, ?, ?)";
+		$stmt = $mysqli->prepare($sql);
+		foreach ($_SESSION['cars'] as $car_id => $quantity) {
+			$stmt->bind_param("iii", $order_id, $car_id, $quantity);
+			$stmt->execute();
+		}
+		header('Location: order_history.php');
+	} else {
+		unset($_SESSION['cars']);
+		header('Location: basket.php');
 	}
 }
 ?>
@@ -56,6 +58,7 @@ if (isset($_POST) && !empty($_POST)) {
 						<li><a href="index.php">Home</a>
 						</li>
 						<li>Checkout</li>
+						<li>Order Review</li>
 					</ul>
 				</div>
 			</div>
@@ -66,27 +69,21 @@ if (isset($_POST) && !empty($_POST)) {
 		<div class="container">
 			<div class="row">
 				<div class="col-md-9" id="checkout">
-					<!-- <form action="" method="get"> -->
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<ul class="nav nav-pills nav-justified">
-								<li class="">
-									<a href="#address" data-toggle="tab">
+								<li>
+									<a href="checkout_address.php">
 										<i class="glyphicon glyphicon-map-marker"></i> Address
 									</a>
 								</li>
-								<!-- <li class="disabled">
-									<a href="#delivery-method" data-toggle="tab" disabled>
-										<i class="glyphicon glyphicon-road"></i> Delivery Method
-									</a>
-								</li> -->
-								<li class="">
-									<a href="#payment" data-toggle="tab">
+								<li>
+									<a href="checkout_payment.php">
 										<i class="glyphicon glyphicon-credit-card"></i> Payment
 									</a>
 								</li>
 								<li class="active">
-									<a href="#order-review" data-toggle="tab">
+									<a href="checkout_review.php">
 										<i class="glyphicon glyphicon-shopping-cart"></i> Order Review
 									</a>
 								</li>
@@ -129,143 +126,185 @@ if (isset($_POST) && !empty($_POST)) {
 							}
 						</style>
 						<div class="panel-body">
-							
-							<div><?=generateMessages($msg)?></div>
 							<div class="row">
-								<div class="col-xs-12">
-									<div class="tab-content">
-										<!-- <div class="panel-body tab-pane fade in active" id="order-review">
-											<div class="tab-pane fade" id="order-review"> -->
-										<div class="table-responsive">
-											<table class="table table-bordered">
-												<thead>
-													<tr>
-														<th colspan="2">Product</th>
-														<th>Quantity</th>
-														<th>Unit price</th>
-														<th>Discount</th>
-														<th>Total</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr>
-														<td class="text-center"><a href="#"><img class="img-thumbnail" src="http://www.freeiconspng.com/uploads/car-icon-27.png"></a></td>
-														<td><a href="#">BMW 3 Series M Sport</a></td>
-														<td>2</td>
-														<td>£10,000.00</td>
-														<td>£0.00</td>
-														<td>£20,000.00</td>
-													</tr>
-													<tr>
-														<td class="text-center"><a href="#"><img class="img-thumbnail" src="http://www.freeiconspng.com/uploads/car-icon-27.png"></a></td>
-														<td><a href="#">BMW 3 Series M Sport</a></td>
-														<td>1</td>
-														<td>£15,000.00</td>
-														<td>£0.00</td>
-														<td>£15,000.00</td>
-													</tr>
-												</tbody>
-												<tfoot>
-													<tr>
-														<th class="text-right" colspan="5">Subtotal</th>
-														<th colspan="2">£35,000.00</th>
-													</tr>
-												</tfoot>
-											</table>
-										</div>
-									</div>
-										<!-- </div>
-									</div> -->
+								<div class="col-md-6">
+									<table class="table-condensed">
+										<?php
+										$sql = "SELECT * FROM tbl_address WHERE address_id = ?";
+										$stmt = $mysqli->prepare($sql);
+										$stmt->bind_param("i", $_SESSION['checkout']['address']);
+										$stmt->execute();
+										$result = $stmt->get_result();
+										$stmt->close();
+										$row = $result->fetch_assoc();
+										?>
+										<tr>
+											<th>Address Name</th>
+											<td><?=$row['name']?></td>
+										</tr>
+										<tr>
+											<th>Address</th>
+											<td><?=$row['address']?></td>
+										</tr>
+										<tr>
+											<th>Town</th>
+											<td><?=$row['town']?></td>
+										</tr>
+										<tr>
+											<th>City</th>
+											<td><?=$row['city']?></td>
+										</tr>
+										<tr>
+											<th>Postcode</th>
+											<td><?=$row['postcode']?></td>
+										</tr>
+									</table>
 								</div>
-							</div>
-						</div>
-						<div class="panel-footer clearfix">
-							<div class="pull-right">
-								<button id="nextTab" class="btn btn-primary" type="submit" form="form">Continue <i class="glyphicon glyphicon-arrow-right"></i></button>
+								<div class="col-md-6">
+									<table class="table-condensed">
+										<?php
+										if ($_SESSION['checkout']['payment'] == "paypal"):
+											?>
+										<tr>
+											<th>Payment Type</th>
+											<td>Paypal</td>
+										</tr>
+										<tr>
+											<th>Email</th>
+											<td><?=$_SESSION['user']['email']?></td>
+										</tr>
+										<?php
+										else:
+											$sql = "SELECT card_number, c.name AS c_name, holder_name, month, year, t.name AS t_name FROM tbl_payment_card c, tbl_card_type t WHERE c.type_code = t.type_code AND card_id = ?";
+										$stmt = $mysqli->prepare($sql);
+										$stmt->bind_param("i", $_SESSION['checkout']['payment']);
+										$stmt->execute();
+										$result = $stmt->get_result();
+										$stmt->close();
+										$row = $result->fetch_assoc();
+										?>
+										<tr>
+											<th>Card Name</th>
+											<td><?=$row['c_name']?></td>
+										</tr>
+										<tr>
+											<th>Card Type</th>
+											<td><?=$row['t_name']?></td>
+										</tr>
+										<tr>
+											<th>Card Holder Name</th>
+											<td><?=$row['holder_name']?></td>
+										</tr>
+										<tr>
+											<th>Card Number</th>
+											<td><?="XXXX-XXXX-XXXX-".substr($row['card_number'], -4)?></td>
+										</tr>
+										<tr>
+											<th>Date of Expiry</th>
+											<td><?=$row['month']."/".$row['year']?></td>
+										</tr>
+									<?php endif; ?>
+								</table>
 							</div>
 						</div>
 					</div>
-					<!-- </form> -->
+					<div class="table-responsive" id="basket">
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th colspan="2">Product</th>
+									<th>Quantity</th>
+									<th>Unit price</th>
+									<th>Total</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php
+								$sql = "SELECT * FROM tbl_car c, tbl_make m WHERE c.make_id = m.make_id AND car_id = ?";
+								$stmt = $mysqli->prepare($sql);
+								$subtotal = 0;
+								foreach ($_SESSION['cars'] as $id => $quantity):
+									$stmt->bind_param("i",$id);
+								$stmt->execute();
+								$result = $stmt->get_result();
+								$row = $result->fetch_assoc();
+								?>
+								<tr>
+									<td class="text-center"><a href="car_details.php?id=<?=$row['car_id']?>"><img class="img-thumbnail img-responsive" src="<?=$row['image_url']?>" style="height: 50px;"></a></td>
+									<td><a href="car_details.php?id=<?=$row['car_id']?>"><?=$row['make_name'] . " " .$row['model']?></a></td>
+									<td><?=$quantity?></td>
+									<td>&pound;<?=$row['price']?></td>
+									<td>&pound;<?=$row['price']*$quantity?></td>
+								</tr>
+								<?php
+								$subtotal += $row['price']*$quantity;
+								endforeach;
+								?>
+							</tbody>
+							<tfoot>
+								<tr>
+									<th class="text-right" colspan="4">Subtotal</th>
+									<th>&pound;<?=$subtotal?></th>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
+					<div class="panel-footer clearfix">
+						<div class="pull-left">
+							<a href="cars.php" class="btn btn-danger"><i class="glyphicon glyphicon-arrow-left"></i> Continue shopping</a>
+						</div>
+						<div class="pull-right">
+							<form method="post">
+								<button type="submit" class="btn btn-danger" name="confirm" value="no">Cancel Purchase <i class="glyphicon glyphicon-trash"></i>
+								</button>
+								<input type="hidden" name="subtotal" value="<?=$subtotal?>">
+								<input type="hidden" name="total" value="<?=$subtotal*1.2?>">
+								<button type="submit" class="btn btn-primary" name="confirm" value="yes">Confirm Purchase <i class="glyphicon glyphicon-shopping-cart"></i>
+								</button>
+							</form>
+						</div>
+					</div>
 				</div>
-				<div class="col-md-3">
-					<!-- <div class="panel panel-default" id="order-summary">
-						<div class="panel-heading">
-							<h3 class="text-uppercase">Order summary</h3>
-						</div>
-						<div class="table-responsive">
-							<table class="table table-bordered table-striped">
-								<tbody>
-									<tr>
-										<td>Subtotal</td>
-										<th>&pound;35,000.00</th>
-									</tr>
-									<tr>
-										<td>Shipping and handling</td>
-										<th>&pound;0.00</th>
-									</tr>
-									<tr>
-										<td>Tax</td>
-										<th>&pound;7,000.00</th>
-									</tr>
-									<tr class="total">
-										<td>Total</td>
-										<th>&pound;42,000.00</th>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div> -->
+			</div>
+			<div class="col-md-3">
+				<div class="panel panel-default" id="order-summary">
+					<div class="panel-heading">
+						<h3 class="text-uppercase">Order summary</h3>
+					</div>
+					<div class="table-responsive">
+						<table class="table table-bordered table-striped">
+							<tbody>
+								<tr>
+									<td>Subtotal</td>
+									<th>&pound;35,000.00</th>
+								</tr>
+								<tr>
+									<td>Shipping and handling</td>
+									<th>&pound;0.00</th>
+								</tr>
+								<tr>
+									<td>Tax</td>
+									<th>&pound;7,000.00</th>
+								</tr>
+								<tr class="total">
+									<td>Total</td>
+									<th>&pound;42,000.00</th>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>
-	</section>
+	</div>
+</section>
 
-	<?php include 'footer.php'; ?>
+<?php include 'footer.php'; ?>
 
-	<script src="js/jquery.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script type="text/javascript">
-		selectTab();
-		function getAnchor() {
-			return document.location.toString().split('#')[1];
-		}
-		function selectTab(hash) {
-			if (hash) {
-				$('.nav-pills a[href="' + hash + '"]').tab('show');
-			} else {
-				$('.nav-pills a[href="#' + getAnchor() + '"]').tab('show');
-			}
-		}
-		$('.nav-pills a').on('shown.bs.tab', function (e) {
-			window.location.hash = e.target.hash;
-			nextTab = document.getElementById("nextTab");
-			console.log(nextTab);
-			console.log(nextTab.nextElementSibling);
-			switch(getAnchor()) {
-				case '':
-				case 'address':
-				nextTab.style.display = 'inline-block';
-				nextTab.nextElementSibling.style.display = "none";
-				nextTab.hash = "delivery-method";
-				break;
-				case 'delivery-method':
-				nextTab.style.display = 'inline-block';
-				nextTab.nextElementSibling.style.display = "none";
-				nextTab.hash = "payment";
-				break;
-				case 'payment':
-				nextTab.style.display = 'inline-block';
-				nextTab.nextElementSibling.style.display = "none";
-				nextTab.hash = "order-review";
-				break;
-				case 'order-review':
-				nextTab.style.display = 'none';
-				nextTab.nextElementSibling.style.display = "inline-block";
-				break;
-				default:
-			}
-		});
-	</script>
+<script src="js//jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script type="text/javascript">
+</script>
 
 </body>
 </html>
